@@ -1,8 +1,8 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Base application themes. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+        <!-- Customize your themes here. -->
     </style>
 
 </resources>
