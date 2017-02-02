@@ -11,7 +11,7 @@ import {
     Navigator,
 } from 'react-native';
 
-import {Container, Header, Title, Content, Footer, FooterTab, Button, Icon, Badge} from 'native-base';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Icon, Badge } from 'native-base';
 
 import TabNavigator from 'react-native-tab-navigator';
 
