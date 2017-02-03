@@ -14,7 +14,7 @@ export default class Counter extends Component {
         const {counter, increment, decrement } = this.props;
 
         return (
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View>
                 <Text>{counter}</Text>
                 <Button title='+' onPress={increment}/>
                 <Button title='-' onPress={decrement}/>

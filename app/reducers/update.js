@@ -5,20 +5,20 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
-    counter: 0,
+    text: '输入内容后更新',
 };
 
 export default function counter(state = initialState, action = {}){
     switch (action.type) {
-        case types.INC:
+        case types.TEXT_CHANGED:
             return {
                 ...state,
-                counter: state.counter + 1,
+                text: action.payload,
             };
-        case types.DEC:
+        case types.UPDATE_TEXT:
             return {
                 ...state,
-                counter: state.counter - 1,
+                text: 'updated',
             };
         default:
             return state;
