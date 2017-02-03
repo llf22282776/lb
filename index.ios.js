@@ -7,17 +7,9 @@
 import React, {Component} from 'react';
 import {AppRegistry} from 'react-native';
 
-import App from './app/App';
+import App from './app/containers/app';
 
-export default class lb extends Component {
-    render() {
-        return (
-            <App />
-        )
-    }
-}
-
-AppRegistry.registerComponent('lb', () => lb);
+AppRegistry.registerComponent('lb', () => App);
 
 /*
 //import configureStore from './app/configureStore';

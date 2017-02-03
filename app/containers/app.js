@@ -3,11 +3,28 @@
  */
 
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
-
+import {createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import RoadMasterApp from './roadMasterApp'
+import * as reducers from '../reducers'
+
+const reducer = combineReducers(reducers);
+const store = createStore(reducer);
+
+export default class App extends Component {
+    render() {
+        return (
+            <Provider store = {store}>
+                <RoadMasterApp />
+            </Provider>
+        )
+    }
+}
+
+/*
 import { connect } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, bindActionCreators} from 'redux';
+
 
 const initialState = {
     counter: 0,
@@ -32,6 +49,10 @@ const store = createStore(reducer);
 store.subscribe(() => console.log(store.getState()));
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <Provider store={store}>
@@ -45,8 +66,11 @@ class App extends Component {
     }
 }
 
-export default connect((store) => {
-    return {
-        counter: store.counter,
-    };
-})(App);
+export default connect(state => ({
+        counter: state.counter,
+}),
+    (dispatch) => ({
+        actions: bindActionCreators()
+    }))(App);
+
+  */
