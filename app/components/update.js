@@ -15,7 +15,7 @@ export default class Update extends Component {
 
         return (
             <View>
-                <TextInput style={{height: 40}} onChangeText={(text) => textChanged(text)} />
+                <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}} onChangeText={(text) => textChanged(text)} />
                 <Text>{text}</Text>
                 <Button title="update" onPress={updateText} />
             </View>

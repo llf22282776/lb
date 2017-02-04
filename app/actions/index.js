@@ -3,8 +3,11 @@
  */
 import * as counterActions from './counterAction';
 import * as updateTextActions from './updateTextAction';
+import * as asyncActions from './AsyncTestAction';
+
 
 export {
     counterActions,
     updateTextActions,
+    asyncActions,
 }
