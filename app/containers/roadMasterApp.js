@@ -9,6 +9,7 @@ import * as allActions from '../actions';
 import {connect} from 'react-redux';
 import Counter from '../components/counter';
 import Update from '../components/update';
+import 'whatwg-fetch'
 
 class RoadMasterApp extends Component {
     constructor(props) {
