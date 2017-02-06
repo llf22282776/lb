@@ -7,7 +7,8 @@
 import React, {Component} from 'react';
 import {AppRegistry} from 'react-native';
 
-import App from './app/containers/app';
+//import App from './app/containers/app';
+import App from './app/containers/appNavigator'
 
 AppRegistry.registerComponent('lb', () => App);
 
