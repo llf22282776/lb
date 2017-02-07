@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import {createStore,applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import RoadMasterApp from './roadMasterApp'
-import AppNavigator from './appNavigator';
 import * as reducers from '../reducers'
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
