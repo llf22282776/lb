@@ -11,7 +11,7 @@ const initialState = {
     error: ''
 };
 
-export default function loadData(state = initialState, action = {}){
+export default function loadDataReducer(state = initialState, action = {}){
     switch(action.type) {
         case types.FETCH_DATA_PENDING:
             return {

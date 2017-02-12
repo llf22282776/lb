@@ -3,30 +3,33 @@
  */
 'use strict';
 
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {View, Text, TextInput, Button, ListView} from 'react-native';
 import * as allActions from '../actions';
 import {connect} from 'react-redux';
 import Counter from '../components/counter';
 import Update from '../components/update';
-import 'whatwg-fetch'
 
 class RoadMasterApp extends Component {
+    static PropTypes = {
+
+    };
+
     constructor(props) {
         super(props);
-    }
+    };
 
     render() {
         const {
-            counter, text, increment, decrement,
+            counter, update, increment, decrement,
             textChanged, updateText,
             async, loadDataAsync
         } = this.props;
 
         return (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Update text={text} textChanged={textChanged} updateText={updateText}/>
-                <Counter counter={counter} increment={increment} decrement={decrement}/>
+                <Update text={update.text} textChanged={textChanged} updateText={updateText}/>
+                <Counter counter={counter.counter} increment={increment} decrement={decrement}/>
                 <Button title="LOAD_DATA_ASYNC" onPress={loadDataAsync}/>
                 <Text>loading: {async.fetching.toString()}</Text>
                 <Text>loaded: {async.fetched.toString()}</Text>
@@ -39,8 +42,8 @@ class RoadMasterApp extends Component {
 
 export default connect(
     (state) => ({
-        counter: state.counter.counter,
-        text: state.update.text,
+        counter: state.counter,
+        update: state.update,
         async: state.async,
     }),
     /*
@@ -53,7 +56,16 @@ export default connect(
         decrement: () => dispatch(allActions.counterActions.decrement()),
         textChanged: (text) => dispatch(allActions.updateTextActions.textChanged(text)),
         updateText: () => dispatch(allActions.updateTextActions.updateText()),
-        loadDataAsync: () => {
+        loadDataAsync: async () => {
+            const response = await fetch('http://example.com/counts');
+            const counts = await response.json();
+            return {
+                type: 'FETCH_DATA',
+                payload: {
+                    news: json
+                }
+            };
+            /*
             dispatch(allActions.asyncActions.fetchPending());
             fetch('http://localhost:8080/users.json')
                 .then((response) => {
@@ -65,6 +77,7 @@ export default connect(
                 .catch((err) => {
                     dispatch(allActions.asyncActions.fetchErr(err.toString()))
                 })
+                */
         }
     })
 )(RoadMasterApp);

@@ -2,10 +2,16 @@
  * Created by bitholic on 2017/2/3.
  */
 
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {View, Text, Button} from 'react-native';
 
 export default class Counter extends Component {
+    static PropsType  = {
+        count: PropTypes.number,
+        increment: PropTypes.func,
+        decrement: PropTypes.func,
+    };
+
     constructor(props) {
         super(props);
     }

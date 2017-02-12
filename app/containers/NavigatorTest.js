@@ -58,7 +58,7 @@ export default class YourApplication extends React.Component {
         switch (type) {
             case 'push':
                 // push a new route.
-                const route = {key: 'route-' + Date.now()};
+                const route = {key: '' + Date.now()};
                 navigationState = NavigationStateUtils.push(navigationState, route);
                 break;
 
@@ -150,15 +150,15 @@ class YourScene extends React.Component {
                     text={'route = ' + this.props.route.key}
                 />
                 <NavigationExampleRow
-                    text="Push Route"
+                    text="NEXT"
                     onPress={this.props.onPushRoute}
                 />
                 <NavigationExampleRow
-                    text="Pop Route"
+                    text="PRE"
                     onPress={this.props.onPopRoute}
                 />
                 <NavigationExampleRow
-                    text="Exit Card Stack Example"
+                    text="EXIT"
                     onPress={this.props.onExit}
                 />
             </ScrollView>
