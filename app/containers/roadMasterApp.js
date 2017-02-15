@@ -11,9 +11,7 @@ import Counter from '../components/counter';
 import Update from '../components/update';
 
 class RoadMasterApp extends Component {
-    static PropTypes = {
-
-    };
+    static PropTypes = {};
 
     constructor(props) {
         super(props);
@@ -56,16 +54,9 @@ export default connect(
         decrement: () => dispatch(allActions.counterActions.decrement()),
         textChanged: (text) => dispatch(allActions.updateTextActions.textChanged(text)),
         updateText: () => dispatch(allActions.updateTextActions.updateText()),
-        loadDataAsync: async () => {
-            const response = await fetch('http://example.com/counts');
-            const counts = await response.json();
-            return {
-                type: 'FETCH_DATA',
-                payload: {
-                    news: json
-                }
-            };
-            /*
+        loadDataAsync: () => dispatch(allActions.asyncActions.fetchData()),
+        /*
+        loadDataAsync: () => {
             dispatch(allActions.asyncActions.fetchPending());
             fetch('http://localhost:8080/users.json')
                 .then((response) => {
@@ -77,7 +68,7 @@ export default connect(
                 .catch((err) => {
                     dispatch(allActions.asyncActions.fetchErr(err.toString()))
                 })
-                */
         }
+        */
     })
 )(RoadMasterApp);

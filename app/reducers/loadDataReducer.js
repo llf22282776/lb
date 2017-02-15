@@ -23,13 +23,13 @@ export default function loadDataReducer(state = initialState, action = {}){
                 ...state,
                 fetching: false,
                 fetched: true,
-                users: action.data,
+                users: action.payload,
             };
         case types.FETCH_DATA_REJECTED:
             return {
                 ...state,
                 fetching: false,
-                error: action.data,
+                error: action.payload.message,
             };
         default:
             return state;
