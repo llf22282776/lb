@@ -27,7 +27,7 @@ const routes = {
     home: {
         key: 'home',
         title: '路宝首页',
-        index: 0,
+        index: 2,
         routes: [
             {key: 'home'},
             {key: 'community'},

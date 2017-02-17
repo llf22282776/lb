@@ -6,6 +6,7 @@ import counterReducer from './reducers/counterReducer';
 import loadDataReducer from './reducers/loadDataReducer';
 import updateTextReducer from './reducers/updateTextReducer';
 import appNavigationReducer from './reducers/appNavigationReducer';
+import questionReducer from './reducers/questionReducer';
 
 
 const logger = createLogger();
@@ -17,6 +18,7 @@ export default (initialState= {}) => (
             async: loadDataReducer,
             update: updateTextReducer,
             navigation: appNavigationReducer,
+            question: questionReducer,
         }),
         initialState,
         applyMiddleware(thunk, promiseMiddleware(), logger)
