@@ -17,18 +17,17 @@ import {
 } from 'native-base';
 import getTheme from '../native-base-theme';
 import myTheme from '../native-base-theme/myThemes/baseTheme';
-import SearchHeaderContainer from '../containers/SearchHeaderContainer';
-import SearchHeaderComp from '../components/SearchHeaderComp';
+import SearchPageContainer from '../containers/SearchPageContainer';
+import SearchPageComp from './SearchPageComp';
 import RoadMasterApp from '../containers/roadMasterApp'
 
 export default class AppTabNaviComp extends Component {
     constructor(props, context) {
         super(props, context);
-        this.renderHeader = this.renderHeader.bind(this);
-        this.renderContent = this.renderContent.bind(this);
+        this.renderPage = this.renderPage.bind(this);
     }
 
-    renderHeader(selectedTab) {
+    renderPage (selectedTab) {
         switch (selectedTab) {
             case 'home':
                 return (
@@ -48,7 +47,7 @@ export default class AppTabNaviComp extends Component {
                 );
             case 'qa':
                 return (
-                    <SearchHeaderContainer/>
+                    <SearchPageContainer />
                 );
             case 'message':
                 return (
@@ -65,41 +64,6 @@ export default class AppTabNaviComp extends Component {
                         <Title>我</Title>
                         </Body>
                     </Header>
-                )
-        }
-    }
-
-    renderContent(selectedTab) {
-        switch (selectedTab) {
-            case 'home':
-                return (
-                    <Content>
-                        <RoadMasterApp/>
-                    </Content>
-                );
-            case 'community':
-                return (
-                    <Content>
-                        <Title>社区</Title>
-                    </Content>
-                );
-            case 'qa':
-                return (
-                    <Content>
-                        <Title>问答</Title>
-                    </Content>
-                );
-            case 'message':
-                return (
-                    <Content>
-                        <Title>消息</Title>
-                    </Content>
-                );
-            case 'my':
-                return (
-                    <Content>
-                        <Title>我</Title>
-                    </Content>
                 )
         }
     }
@@ -109,8 +73,7 @@ export default class AppTabNaviComp extends Component {
         return (
             <StyleProvider style={getTheme(myTheme)}>
                 <Container>
-                    {this.renderHeader(selectedTab)}
-                    {this.renderContent(selectedTab)}
+                    {this.renderPage(selectedTab)}
                     <Footer>
                         <FooterTab>
                             <Button active={selectedTab === 'home'} onPress={() => tab('home')}>

@@ -118,7 +118,7 @@ export default {
 
     // Font
     fontFamily: (platform === 'ios') ? 'System' : 'Roboto',
-    fontSizeBase: 15,
+    fontSizeBase: 14,
 
     get fontSizeH1() {
         return this.fontSizeBase * 1.8;
@@ -209,8 +209,10 @@ export default {
 
 
     // List
-    listBorderColor: '#c9c9c9',
+    //listBorderColor: '#c9c9c9',
+    listBorderColor: '#fff',
     listDividerBg: '#f4f4f4',
+    //listDividerBg: '#fff',
     listItemHeight: 45,
 
     // Card
