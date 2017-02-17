@@ -3,19 +3,20 @@
  */
 import React, {Component, PropTypes} from 'react';
 import {
+    StyleProvider,
     Container,
     Header,
     Title,
     Content,
     Footer,
     FooterTab,
+    Text,
     Button,
+    Body,
     Icon,
-    Badge,
-    InputGroup,
-    Input,
 } from 'native-base';
-import baseTheme from '../themes/baseTheme';
+import getTheme from '../native-base-theme';
+import myTheme from '../native-base-theme/myThemes/baseTheme';
 import SearchHeaderContainer from '../containers/SearchHeaderContainer';
 import SearchHeaderComp from '../components/SearchHeaderComp';
 import RoadMasterApp from '../containers/roadMasterApp'
@@ -32,42 +33,37 @@ export default class AppTabNaviComp extends Component {
             case 'home':
                 return (
                     <Header>
+                        <Body>
                         <Title>首页</Title>
+                        </Body>
                     </Header>
                 );
             case 'community':
                 return (
                     <Header>
+                        <Body>
                         <Title>社区</Title>
+                        </Body>
                     </Header>
                 );
             case 'qa':
                 return (
-                    <Header searchBar rounded>
-                        <InputGroup>
-                            <Icon name="ios-search"/>
-                            <Input rounded
-                                   placeholder="请输入您的问题"
-                            />
-                        </InputGroup>
-                        <Button
-                            transparent
-                            textStyle={{fontSize: 15}}
-                        >
-                            确认
-                        </Button>
-                    </Header>
+                    <SearchHeaderContainer/>
                 );
             case 'message':
                 return (
                     <Header>
+                        <Body>
                         <Title>消息</Title>
+                        </Body>
                     </Header>
                 );
             case 'my':
                 return (
                     <Header>
+                        <Body>
                         <Title>我</Title>
+                        </Body>
                     </Header>
                 )
         }
@@ -111,45 +107,36 @@ export default class AppTabNaviComp extends Component {
     render() {
         const {selectedTab, tab} = this.props;
         return (
-            <Container theme={baseTheme}>
-                {this.renderHeader(selectedTab)}
-                {this.renderContent(selectedTab)}
-                <Footer>
-                    <FooterTab>
-                        <Button
-                            active={selectedTab === 'home'}
-                            onPress={() => tab('home')}>
-                            首页
-                            <Icon name='ios-home-outline'/>
-                        </Button>
-                        <Button
-                            active={selectedTab === 'community'}
-                            onPress={() => tab('community')}>
-                            社区
-                            <Icon name='ios-people-outline'/>
-                        </Button>
-                        <Button
-                            active={selectedTab === 'qa'}
-                            onPress={() => tab('qa')}>
-                            问答
-                            <Icon name='ios-bulb-outline'/>
-                        </Button>
-                        <Button
-                            active={selectedTab === 'message'}
-                            onPress={() => tab('message')}>
-                            <Badge>2</Badge>
-                            消息
-                            <Icon name='ios-mail-outline'/>
-                        </Button>
-                        <Button
-                            active={selectedTab === 'my'}
-                            onPress={() => tab('my')}>
-                            我
-                            <Icon name='ios-person-outline'/>
-                        </Button>
-                    </FooterTab>
-                </Footer>
-            </Container>
+            <StyleProvider style={getTheme(myTheme)}>
+                <Container>
+                    {this.renderHeader(selectedTab)}
+                    {this.renderContent(selectedTab)}
+                    <Footer>
+                        <FooterTab>
+                            <Button active={selectedTab === 'home'} onPress={() => tab('home')}>
+                                <Icon name='ios-home-outline'/>
+                                <Text>首页</Text>
+                            </Button>
+                            <Button active={selectedTab === 'community'} onPress={() => tab('community')}>
+                                <Icon name='ios-people-outline'/>
+                                <Text>社区</Text>
+                            </Button>
+                            <Button active={selectedTab === 'qa'} onPress={() => tab('qa')}>
+                                <Icon name='ios-bulb-outline'/>
+                                <Text>问答</Text>
+                            </Button>
+                            <Button active={selectedTab === 'message'} badgeValue={1} onPress={() => tab('message')}>
+                                <Icon name='ios-mail-outline'/>
+                                <Text>消息</Text>
+                            </Button>
+                            <Button active={selectedTab === 'my'} onPress={() => tab('my')}>
+                                <Icon name='ios-person-outline'/>
+                                <Text>我</Text>
+                            </Button>
+                        </FooterTab>
+                    </Footer>
+                </Container>
+            </StyleProvider>
         )
     }
 

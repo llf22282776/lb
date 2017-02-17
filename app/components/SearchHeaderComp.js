@@ -6,10 +6,10 @@ import {
     Header,
     Button,
     Icon,
-    InputGroup,
+    Item,
     Input,
+    Text,
 } from 'native-base';
-import {View} from 'react-native';
 
 export default class SearchHeaderComp extends Component {
     constructor(props, context) {
@@ -19,22 +19,15 @@ export default class SearchHeaderComp extends Component {
     render() {
         const {inputQuestion, submitQuestion} = this.props;
         return (
-            <View style={{flex: 1, flexDirection: 'row', margin: 0}}>
-                <InputGroup>
+            <Header searchBar rounded>
+                <Item>
                     <Icon name="ios-search"/>
-                    <Input rounded
-                        placeholder="请输入您的问题"
-                        onChangeText={(text) => inputQuestion(text)}
-                    />
-                </InputGroup>
-                <Button
-                    transparent
-                    textStyle={{fontSize: 15}}
-                    onPress={() => submitQuestion()}
-                >
-                    确认
+                    <Input rounded placeholder="请输入您的问题" onChangeText={(text) => inputQuestion(text)} />
+                </Item>
+                <Button transparent textStyle={{fontSize: 15}} onPress={() => submitQuestion()}>
+                    <Text>搜索</Text>
                 </Button>
-            </View>
+            </Header>
         )
     }
 }
