@@ -3,7 +3,7 @@
  */
 
 import * as types from './actionTypes';
-import fetch from 'isomorphic-fetch';
+//import fetch from 'isomorphic-fetch';
 
 export function fetchData() {
     const request = fetch('http://localhost:8080/users.json');

@@ -8,14 +8,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SearchPageComp from '../components/SearchPageComp';
-import { inputQuestion, submitQuestion } from '../actions/SearchAction';
+import { changeQuestion, getSearchHelp, startInputQuestion, stopInputQuestion, submitQuestion } from '../actions/SearchAction';
 
 export default connect(
     (state) => ({
         search: state.search,
     }),
     (dispatch) => (bindActionCreators({
-        inputQuestion,
+        changeQuestion,
+        getSearchHelp,
+        startInputQuestion,
+        stopInputQuestion,
         submitQuestion,
     }, dispatch))
 )(SearchPageComp);

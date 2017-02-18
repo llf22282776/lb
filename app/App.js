@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import createStore from './createStore';
 import { Provider } from 'react-redux';
 import AppNavigator from './containers/AppNavigator';
+import storage from './config/asyncStorage';
 
 const store = createStore();
 
