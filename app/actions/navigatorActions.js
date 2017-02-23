@@ -1,6 +1,7 @@
 /**
  * Created by bitholic on 2017/2/15.
  */
+'use strict';
 
 import * as types from '../actions/actionTypes';
 

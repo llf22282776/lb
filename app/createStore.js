@@ -1,26 +1,27 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+/**
+ * Created by bitholic on 2017/2/15.
+ */
+'use strict';
+
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import createLogger from 'redux-logger';
-import counterReducer from './reducers/counterReducer';
-import loadDataReducer from './reducers/loadDataReducer';
-import updateTextReducer from './reducers/updateTextReducer';
-import appNavigationReducer from './reducers/appNavigationReducer';
+import storage from './config/asyncStorageConf';
+import navigationReducer from './reducers/navigatorReducer';
 import searchReducer from './reducers/searchReducer';
 
+global.storage = storage;
 
 const logger = createLogger();
 
-export default (initialState= {}) => (
-    createStore(
-        combineReducers({
-            counter: counterReducer,
-            async: loadDataReducer,
-            update: updateTextReducer,
-            navigation: appNavigationReducer,
-            search: searchReducer,
-        }),
-        initialState,
-        applyMiddleware(thunk, promiseMiddleware(), logger)
-    )
+const store = createStore(
+    combineReducers({
+        navigator: navigationReducer,
+        search: searchReducer,
+    }),
+    {},  //initialState
+    applyMiddleware(thunk, promiseMiddleware(), logger)
 );
+
+export default store;

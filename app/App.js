@@ -3,18 +3,15 @@
  */
 
 import React, { Component } from 'react';
-import createStore from './createStore';
 import { Provider } from 'react-redux';
-import AppNavigator from './containers/AppNavigator';
-import storage from './config/asyncStorage';
-
-const store = createStore();
+import store from './createStore';
+import NavigatorContainer from './containers/HomePageContainer';
 
 export default class App extends Component {
     render() {
         return (
             <Provider store = {store}>
-                <AppNavigator />
+                <NavigatorContainer />
             </Provider>
         )
     }

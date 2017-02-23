@@ -8,21 +8,20 @@ import React, {Component} from 'react';
 import {NavigationExperimental} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import AppNavigatorComp from '../components/AppNavigatorComp';
-import AppTabNaviComp from '../components/AppTabNaviComp';
-import { tab } from '../actions/appNavigationAction';
+import HomePage from '../components/HomePage';
+import { tab } from '../actions/navigatorActions';
 
 const { StateUtils } = NavigationExperimental;
 
 export default connect(
     (state) => {
         //navigation: state.navigation,
-        const homeState = StateUtils.get(state.navigation, 'home');
+        const homeState = StateUtils.get(state.navigator, 'home');
         return {
-            selectedTab: homeState ? homeState.routes[homeState.index].key : 'home'
+            selectedTab: homeState ? homeState.routes[homeState.index].key : 'qa'
         }
     },
     (dispatch) => (bindActionCreators({
         tab,
     }, dispatch))
-)(AppTabNaviComp);
+)(HomePage);
