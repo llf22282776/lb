@@ -2,7 +2,6 @@
  * Created by bitholic on 2017/2/16.
  */
 import * as types from '../actions/actionTypes';
-import fetch from 'isomorphic-fetch';
 
 export function changeQuestion(text) {
     return {

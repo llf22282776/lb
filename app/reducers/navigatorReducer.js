@@ -11,6 +11,7 @@ const {StateUtils} = NavigationExperimental;
 const initialState = {
     index: 0,
     routes: [
+        {key: 'login'},
         {
             key: 'home',
             index: 1,
@@ -23,7 +24,7 @@ const initialState = {
     ]
 };
 
-export default function appNavigationReducer(state = initialState, action = {}) {
+export default function navigatorReducer(state = initialState, action = {}) {
     switch (action.type) {
         case types.NAVIGATION_PUSH:
             return StateUtils.push(state, action.payload);

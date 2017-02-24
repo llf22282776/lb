@@ -1,6 +1,8 @@
 /**
  * Created by bitholic on 2017/2/16.
  */
+'use strict';
+
 import React, {Component, PropTypes} from 'react';
 import {
     StyleProvider,
@@ -15,6 +17,7 @@ import {
     Body,
     Icon,
 } from 'native-base';
+import {View} from 'react-native';
 import getTheme from '../themes';
 import myTheme from '../themes/myThemes/baseTheme';
 import SearchPageContainer from '../containers/SearchPageContainer';
@@ -42,7 +45,7 @@ export default class HomePage extends Component {
                               removeClippedSubviews={!(selectedTab === 'community')}>
                             <Header>
                                 <Body>
-                                <Title style={styles.headerText}>{headerText[selectedTab]}</Title>
+                                <Title>{headerText[selectedTab]}</Title>
                                 </Body>
                             </Header>
                             <Content>
@@ -62,13 +65,13 @@ export default class HomePage extends Component {
                               removeClippedSubviews={!(selectedTab === 'my')}>
                             <Header>
                                 <Body>
-                                <Title style={styles.headerText}>{headerText[selectedTab]}</Title>
+                                <Title>{headerText[selectedTab]}</Title>
                                 </Body>
-                                <Content>
-                                    <Title>MyPage</Title>
-                                    <Text>mypagecontent</Text>
-                                </Content>
                             </Header>
+                            <Content>
+                                <Title>MyPage</Title>
+                                <Text>mypagecontent</Text>
+                            </Content>
                         </View>
                     </Container>
                     <Footer>
@@ -91,64 +94,6 @@ export default class HomePage extends Component {
             </StyleProvider>
         )
     }
-
-    renderPage(selectedTab) {
-        switch (selectedTab) {
-            case 'home':
-                return (
-                    <Header>
-                        <Body>
-                        <Title>首页</Title>
-                        </Body>
-                    </Header>
-                );
-            case 'community':
-                return (
-                    <Container>
-                        <Header>
-                            <Body>
-                            <Title>社区</Title>
-                            </Body>
-                        </Header>
-                        <Content>
-                            <Text>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
-                                piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard
-                                McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of
-                                the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through
-                                the cites of the word in classical literature, discovered the undoubtable source. Lorem
-                                Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The
-                                Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the
-                                theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
-                                "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                                The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
-                                interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero
-                                are also reproduced in their exact original form, accompanied by English versions from
-                                the 1914 translation by H. Rackham.</Text>
-                        </Content>
-                    </Container>
-                );
-            case 'qa':
-                return (
-                    <SearchPageContainer />
-                );
-            case 'message':
-                return (
-                    <Header>
-                        <Body>
-                        <Title>消息</Title>
-                        </Body>
-                    </Header>
-                );
-            case 'my':
-                return (
-                    <Header>
-                        <Body>
-                        <Title>我</Title>
-                        </Body>
-                    </Header>
-                )
-        }
-    }
 }
 
 const styles = {
@@ -163,7 +108,4 @@ const styles = {
         right: 0,
         bottom: 0,
     },
-    headerText: {
-        color: '#fff',
-    }
 };

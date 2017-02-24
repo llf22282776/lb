@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import createLogger from 'redux-logger';
 import storage from './config/asyncStorageConf';
-import navigationReducer from './reducers/navigatorReducer';
+import navigatorReducer from './reducers/navigatorReducer';
 import searchReducer from './reducers/searchReducer';
 
 global.storage = storage;
@@ -17,7 +17,7 @@ const logger = createLogger();
 
 const store = createStore(
     combineReducers({
-        navigator: navigationReducer,
+        navigator: navigatorReducer,
         search: searchReducer,
     }),
     {},  //initialState
