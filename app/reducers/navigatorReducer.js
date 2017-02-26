@@ -8,26 +8,31 @@ import {NavigationExperimental} from 'react-native';
 
 const {StateUtils} = NavigationExperimental;
 
+const tabs = {
+    key: 'home',
+    index: 1,
+    routes: [
+        {key: 'community'},
+        {key: 'qa'},
+        {key: 'my'},
+    ]
+};
+
 const initialState = {
     index: 0,
     routes: [
         {key: 'login'},
-        {
-            key: 'home',
-            index: 1,
-            routes: [
-                {key: 'community'},
-                {key: 'qa'},
-                {key: 'my'},
-            ]
-        },
     ]
 };
 
 export default function navigatorReducer(state = initialState, action = {}) {
     switch (action.type) {
         case types.NAVIGATION_PUSH:
-            return StateUtils.push(state, action.payload);
+            if(action.payload.key === 'home'){
+                return StateUtils.push(state, tabs);
+            }else{
+                return StateUtils.push(state, action.payload);
+            }
         case types.NAVIGATION_POP:
             return StateUtils.pop(state);
         case types.NAVIGATION_TAB:

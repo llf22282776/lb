@@ -8,6 +8,8 @@
     "eject-native-base": "node node_modules/native-base/ejectTheme.js"
   },
   "dependencies": {
+    "es6-promise": "^4.0.5",
+    "isomorphic-fetch": "^2.2.1",
     "native-base": "2.0.0",
     "react": "15.4.2",
     "react-native": "0.40.0",

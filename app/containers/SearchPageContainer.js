@@ -4,21 +4,33 @@
 
 'use strict';
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import SearchPageComp from '../components/SearchPageComp';
-import { changeQuestion, getSearchHelp, startInputQuestion, stopInputQuestion, submitQuestion } from '../actions/SearchAction';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import SearchPage from '../components/SearchPage';
+import {
+    changeQuestion,
+    getSearchHistory,
+    deleteHistory,
+    getSearchHelp,
+    startInputQuestion,
+    stopInputQuestion,
+    submitQuestion
+} from '../actions/SearchAction';
 
 export default connect(
     (state) => ({
         search: state.search,
     }),
-    (dispatch) => (bindActionCreators({
-        changeQuestion,
-        getSearchHelp,
-        startInputQuestion,
-        stopInputQuestion,
-        submitQuestion,
-    }, dispatch))
-)(SearchPageComp);
+    (dispatch) => ({
+        changeQuestion: (text) => dispatch(changeQuestion(text)),
+        getSearchHistory: () => dispatch(getSearchHistory()).catch(err => {
+        }),
+        deleteHistory: () => dispatch(deleteHistory()),
+        getSearchHelp: () => dispatch(getSearchHelp()).catch(err => {
+        }),
+        startInputQuestion: () => dispatch(startInputQuestion()),
+        stopInputQuestion: () => dispatch(stopInputQuestion()),
+        submitQuestion: () => dispatch(submitQuestion()).catch(err => {
+        }),
+    }),
+)(SearchPage);

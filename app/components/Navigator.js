@@ -19,13 +19,11 @@ export default class Navigator extends Component {
     };
 
     constructor(props, context) {
-        console.log('constructor');
         super(props, context);
         this.renderScene = this.renderScene.bind(this);
     }
 
     render() {
-        console.log('running');
         return (
             <CardStack
                 onNavigateBack={this.props.pop}
@@ -37,7 +35,6 @@ export default class Navigator extends Component {
 
     renderScene(sceneProps) {
         const route = sceneProps.scene.route;
-        console.log(route);
         switch (route.key) {
             case 'home':
                 return (

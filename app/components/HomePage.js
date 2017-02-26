@@ -23,7 +23,7 @@ import myTheme from '../themes/myThemes/baseTheme';
 import SearchPageContainer from '../containers/SearchPageContainer';
 
 const headerText = {
-    community: '社区',
+    community: '路宝社区',
     qa: '问答',
     my: '我的'
 };
