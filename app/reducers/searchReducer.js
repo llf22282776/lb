@@ -63,7 +63,7 @@ export default function questionReducer(state = initialState, action = {}) {
                 searchHelpFetched: false,
             };
         case types.SUBMIT_QUESTION_PENDING:
-            state.searchHistory[state.searchHistory.length] = state.question;  //faster than push on samll arrays
+            state.searchHistory[state.searchHistory.length] = state.question;  //faster than push on small arrays
             storage.save({
                 key: 'searchHistory',
                 rawData: {history: state.searchHistory},

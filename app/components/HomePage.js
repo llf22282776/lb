@@ -57,7 +57,7 @@ export default class HomePage extends Component {
                               style={[styles.sceneContainer, (selectedTab === 'qa' ? {} : styles.hidden)]}
                               pointerEvents={selectedTab === 'qa' ? 'auto' : 'none'}
                               removeClippedSubviews={!(selectedTab === 'qa')}>
-                            <SearchPageContainer/>
+                            <SearchPageContainer push={this.props.push} pop={this.props.pop}/>
                         </View>
                         <View key='my'
                               style={[styles.sceneContainer, (selectedTab === 'my' ? {} : styles.hidden)]}

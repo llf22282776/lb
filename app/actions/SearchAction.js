@@ -20,7 +20,7 @@ export const deleteHistory = () => ({
 
 export const getSearchHelp = () => ({
     type: types.GET_SEARCH_HELP,
-    payload: fetch('http://localhost:8080/searchHelp.json').then(response => response.json()),
+    payload: fetch('http://localhost:8080/searchHelp.json',{headers: {'Cache-Control': 'no-cache'}}).then(response => response.json()),
 });
 
 export const startInputQuestion = () => ({
@@ -33,5 +33,5 @@ export const stopInputQuestion = () => ({
 
 export const submitQuestion = () => ({
     type: types.SUBMIT_QUESTION,
-    payload: fetch('http://localhost:8080/answer.json').then(response => response.json())
+    payload: fetch('http://localhost:8080/answers.json',{headers: {'Cache-Control': 'no-cache'}}).then(response => response.json())
 });

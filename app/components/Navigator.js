@@ -8,6 +8,7 @@ import HomePageContainer from '../containers/HomePageContainer';
 import LoginPage from '../components/LoginPage';
 import RegisterPage from '../components/RegisterPage';
 import ForgetPasswordPage from '../components/ForgetPasswordPage';
+import AnswerDetailPage from '../components/AnswerDetailPage';
 
 const {CardStack} = NavigationExperimental;
 
@@ -67,7 +68,16 @@ export default class Navigator extends Component {
                         push={this.props.push}
                         pop={this.props.pop}
                     />
-                )
+                );
+            case 'answerDetail':
+                return (
+                    <AnswerDetailPage
+                        {...route.props}
+                        {...route}
+                        push={this.props.push}
+                        pop={this.props.pop}
+                    />
+                );
         }
     }
 }

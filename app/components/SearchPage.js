@@ -13,9 +13,6 @@ import {
     Input,
     Text,
     Title,
-    Card,
-    CardItem,
-    Thumbnail,
     ListItem,
     Left,
     Body,
@@ -27,6 +24,10 @@ import {getSubString} from '../util/getSubString';
 export default class SearchPage extends Component {
     constructor(props, context) {
         super(props, context);
+        this.state = {
+            lastSubmitText: '',
+            searched: false,
+        };
         this.renderContent = this.renderContent.bind(this);
     }
 
@@ -40,8 +41,9 @@ export default class SearchPage extends Component {
             <Container>
                 <Header searchBar rounded>
                     <Item>
-                        <Icon name="ios-search"/>
-                        <Input rounded placeholder="请输入您的问题" value={search.question}
+                        <Icon name='ios-search'/>
+                        <Input rounded placeholder='请输入您的问题' value={search.question}
+                               returnKeyType='search'
                                onChangeText={(text) => {
                                    changeQuestion(text);
                                    getSearchHelp()
@@ -52,18 +54,30 @@ export default class SearchPage extends Component {
                                        this.props.getSearchHistory();
                                    }
                                }}
-                               onBlur={() => stopInputQuestion()}
+                               onSubmitEditing={() => {
+                                   if (search.question !== '') {
+                                       submitQuestion();
+                                       this.setState({
+                                           lastSubmitText: search.question,
+                                           searched: true,
+                                       });
+                                   }
+                               }}
                         />
-                        <Icon name="ios-close"/>
+                        <Icon name='ios-close' onPress={() => changeQuestion('')}/>
                     </Item>
-                    <Button transparent fontSize={{fontSize: 15}}
-                            onPress={() => {
-                                if (search.question !== '') {
-                                    submitQuestion();
-                                }
-                            }}>
-                        <Text>搜索</Text>
-                    </Button>
+                    <View
+                        style={search.inputting ? {} : styles.hidden}
+                        pointerEvents={search.inputting ? 'auto' : 'none'}
+                        removeClippedSubviews={!search.inputting}>
+                        <Button transparent fontSize={{fontSize: 15}}
+                                onPress={() => {
+                                    changeQuestion(this.state.lastSubmitText);
+                                    stopInputQuestion();
+                                }}>
+                            <Text>取消</Text>
+                        </Button>
+                    </View>
                 </Header>
                 {this.renderContent(search)}
             </Container>
@@ -76,24 +90,24 @@ export default class SearchPage extends Component {
                 return (
                     <View style={{height: 300}}>
                         <Content>
-                            {this.renderListItems(search.searchHistory)}
+                            {this.renderListItems(search.searchHistory.reverse())}
                             <ListItem icon onPress={() => this.props.deleteHistory()}>
                                 <Body style={{alignItems: 'center'}}>
                                 <Text style={{color: 'red', fontSize: 13}}>清除历史记录</Text>
                                 </Body>
                                 <Right>
-                                    <Icon name="ios-close" style={{color: 'red'}}/>
+                                    <Icon name='ios-close' style={{color: 'red'}}/>
                                 </Right>
                             </ListItem>
                         </Content>
                     </View>
-                )
+                );
             } else {
                 return (
                     <Content>
                         { this.renderListItems(search.searchHelps) }
                     </Content>
-                )
+                );
             }
         } else {
             if (search.fetching === true) {
@@ -101,9 +115,24 @@ export default class SearchPage extends Component {
                     <Content>
                         <Spinner color='#007aff' size={1}/>
                     </Content>
-                )
+                );
             } else {
-                if (search.error !== undefined) {
+                if (search.error === undefined) {
+                    if (!this.state.searched && search.question === '') {
+                        return (
+                            <View style={{alignItems: 'center', paddingTop: 140}}>
+                                <Image source={require('../resources/robot.png') }/>
+                                <Title style={{fontSize: 25, color: '#bfbfbf', paddingTop: 40}}>您好，请问您需要什么帮助？</Title>
+                            </View>
+                        );
+                    } else {
+                        return (
+                            <Content>
+                                {this.renderResults(search.answers)}
+                            </Content>
+                        );
+                    }
+                } else {
                     return (
                         <Content>
                             <Body>
@@ -111,13 +140,7 @@ export default class SearchPage extends Component {
                             <Text style={{fontSize: 15}}>加载失败: {search.error.message}</Text>
                             </Body>
                         </Content>
-                    )
-                } else {
-                    return (
-                        <Content>
-                            {this.renderResults(search.answers)}
-                        </Content>
-                    )
+                    );
                 }
             }
         }
@@ -132,7 +155,7 @@ export default class SearchPage extends Component {
                         <Text>{text}</Text>
                         </Body>
                         <Right>
-                            <Icon name="ios-arrow-forward"/>
+                            <Icon name='ios-arrow-forward'/>
                         </Right>
                     </ListItem>
                 )
@@ -144,11 +167,20 @@ export default class SearchPage extends Component {
         if (answers instanceof Array) {
             return answers.map((qa, id) => {
                 return (
-                    <ListItem key={id}>
+                    <ListItem
+                        key={id}
+                        style={{paddingHorizontal: 3}}
+                        onPress={() => this.props.push({key: 'answerDetail', qa: qa})}
+                    >
                         <Body>
-                        <Title>{qa.question}</Title>
-                        <Text>{getSubString(qa.answers[0], 40)}</Text>
+                        <Text style={{
+                            fontWeight: 'bold',
+                            fontSize: 15,
+                            color: '#007aff'
+                        }}>{getSubString(qa.question, 19)}</Text>
+                        <Text style={{fontSize: 14, paddingTop: 12}}>{getSubString(qa.answers[0], 43)}</Text>
                         </Body>
+                        <Icon name='ios-arrow-forward' style={{fontSize: 20, paddingRight: 8, color: '#007aff'}}/>
                     </ListItem>
                 )
             })
@@ -156,46 +188,10 @@ export default class SearchPage extends Component {
     }
 }
 
-/*
- <ListItem avatar>
- <Body>
- <Text style={{paddingLeft: 230}}>bitholic</Text>
- <View style={{
- backgroundColor: '#ccc',
- borderRadius: 10,
- paddingLeft: 15,
- marginLeft: 15,
- paddingVertical: 10
- }}>
- <Text>Lorem Ipsum is simply dummy text of the printing and typesetting industry?</Text>
- </View>
- </Body>
- <Right>
- <Thumbnail source={require('../resources/user_selected.png')}/>
- </Right>
- </ListItem>
- <ListItem avatar>
- <Right>
- <Thumbnail source={require('../resources/qa_selected.png')}/>
- </Right>
- <Body>
- <Text>Mr.Robot</Text>
- <View style={{
- backgroundColor: '#cde1f9',
- borderRadius: 10,
- paddingLeft: 15,
- marginRight: 15,
- paddingVertical: 10
- }}>
- <Text >Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
- when an
- unknown printer took a galley of type and scrambled it to make a type specimen book.
- It
- has survived not only five centuries, but also the leap into electronic typesetting,
- remaining essentially unchanged. It was popularised in the 1960s with the release of
- Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
- publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
- </View>
- </Body>
- </ListItem>
- */
+const styles = {
+    hidden: {
+        width: 0,
+        overflow: 'hidden',
+        opacity: 0,
+    },
+};

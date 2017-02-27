@@ -3,7 +3,7 @@
  */
 
 export const getSubString = (str, len) => {
-    if(str <= len)
+    if(str.length <= len)
         return str;
     else
         return str.substring(0, len) + '...';
