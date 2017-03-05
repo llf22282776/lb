@@ -17,7 +17,7 @@ import {
 
 import {Text, View} from 'react-native';
 
-import RegisterPage from '../components/RegisteredPage';
+import RegisterPage from '../components/RegisterPage';
 import UserInfo from '../components/UserPage'
 import {connect} from 'react-redux';
 import { actions as navigationActions } from 'react-native-navigation-redux-helpers';

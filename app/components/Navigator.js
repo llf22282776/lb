@@ -6,10 +6,10 @@ import React, {Component, PropTypes} from 'react';
 import {NavigationExperimental} from 'react-native';
 import HomePageContainer from '../containers/HomePageContainer';
 import LoginPage from '../components/LoginPage';
-import RegisterPage from '../components/RegisterPage';
+import RegisterPage from './Login';
 import ForgetPasswordPage from '../components/ForgetPasswordPage';
 import AnswerDetailPage from '../components/AnswerDetailPage';
-
+import UserInfo from './UserPage';
 const {CardStack} = NavigationExperimental;
 
 export default class Navigator extends Component {
@@ -78,6 +78,13 @@ export default class Navigator extends Component {
                         pop={this.props.pop}
                     />
                 );
+            case 'userInfo':
+                return(
+                    <UserInfo
+                        push={this.props.push}
+                        pop={this.props.pop}
+                    />
+                )
         }
     }
 }

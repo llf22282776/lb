@@ -13,7 +13,7 @@ export default class UserInfo extends Component {
 	    this.styles = {
 	        rowButton:{
 	            height:100,
-		        flex:1,
+		        flex:1
 	        }
 	    }
     }
@@ -45,11 +45,13 @@ export default class UserInfo extends Component {
 								</CardItem>
 							</Card>
 						</CardItem>
+						<CardItem itemDvider/>
 						<CardItem button>
 							<Icon name="ios-car"/>
 							<Text>绑定车辆</Text>
 							<Icon name="ios-arrow-forward" />
 						</CardItem>
+						<CardItem itemDvider/>
 						{()=>{
 							if(this.state.topicShow){
 								return(
@@ -60,21 +62,30 @@ export default class UserInfo extends Component {
 									</CardItem>
 								)
 							}
-						}
-						}
-
-						<CardItem button>
-							<Text>#吐槽#</Text>
-						</CardItem>
-						<CardItem button>
-							<Text>#汽车保养#</Text>
-						</CardItem>
-						<CardItem button>
-							<Text>#追责#</Text>
-						</CardItem>
+							else{
+								return(
+									<Content>
+										<CardItem button>
+											<Text>#吐槽#</Text>
+										</CardItem>
+										<CardItem button>
+											<Text>#汽车保养#</Text>
+										</CardItem>
+										<CardItem button>
+											<Text>#追责#</Text>
+										</CardItem>
+									</Content>
+								)
+							}
+						}}
 						<CardItem button>
 							<Icon name="ios-settings"/>
 							<Text>设置</Text>
+							<Icon name="ios-arrow-forward"/>
+						</CardItem>
+						<CardItem button>
+							<Icon name="ios-notifications"/>
+							<Text>通知</Text>
 							<Icon name="ios-arrow-forward"/>
 						</CardItem>
 					</Card>
