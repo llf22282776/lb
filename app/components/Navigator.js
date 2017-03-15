@@ -9,6 +9,7 @@ import LoginPage from '../components/LoginPage';
 import RegisterPage from '../components/RegisterPage';
 import ForgetPasswordPage from '../components/ForgetPasswordPage';
 import AnswerDetailPage from '../components/AnswerDetailPage';
+import AddQuestionPage from '../components/AddQuestionPage';
 
 const {CardStack} = NavigationExperimental;
 
@@ -78,6 +79,14 @@ export default class Navigator extends Component {
                         pop={this.props.pop}
                     />
                 );
+            case 'addQuestion':
+                return (
+                    <AddQuestionPage
+                        {...route.props}
+                        push={this.props.push}
+                        pop={this.props.pop}
+                    />
+                )
         }
     }
 }

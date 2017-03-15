@@ -91,13 +91,10 @@ export default class SearchPage extends Component {
                     <View style={{height: 300}}>
                         <Content>
                             {this.renderListItems(search.searchHistory.reverse())}
-                            <ListItem icon onPress={() => this.props.deleteHistory()}>
-                                <Body style={{alignItems: 'center'}}>
+                            <ListItem onPress={() => this.props.deleteHistory()}>
+                                <Body style={{borderBottomWidth: 0, alignItems: 'center'}}>
                                 <Text style={{color: 'red', fontSize: 13}}>清除历史记录</Text>
                                 </Body>
-                                <Right>
-                                    <Icon name='ios-close' style={{color: 'red'}}/>
-                                </Right>
                             </ListItem>
                         </Content>
                     </View>
@@ -180,7 +177,7 @@ export default class SearchPage extends Component {
                         }}>{getSubString(qa.question, 19)}</Text>
                         <Text style={{fontSize: 14, paddingTop: 12}}>{getSubString(qa.answers[0], 43)}</Text>
                         </Body>
-                        <Icon name='ios-arrow-forward' style={{fontSize: 20, paddingRight: 8, color: '#007aff'}}/>
+                        <Icon name='ios-arrow-forward' style={{fontSize: 20, paddingRight: 8, }}/>
                     </ListItem>
                 )
             })
