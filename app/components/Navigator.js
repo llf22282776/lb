@@ -5,8 +5,8 @@
 import React, {Component, PropTypes} from 'react';
 import {NavigationExperimental} from 'react-native';
 import HomePageContainer from '../containers/HomePageContainer';
-import LoginPage from '../components/LoginPage';
-import RegisterPage from './Login';
+import LoginPage from '../components/Login';
+import RegisterPage from './RegisterPage';
 import ForgetPasswordPage from '../components/ForgetPasswordPage';
 import AnswerDetailPage from '../components/AnswerDetailPage';
 import UserInfo from './UserPage';
