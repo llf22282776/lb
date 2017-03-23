@@ -34,7 +34,7 @@ export default class UserInfo extends Component {
 			<Container >
 				<Content >
 					<Card>
-						<CardItem onPress={()=>{this.props.changeKey('detail')}}>
+						<CardItem button onPress={()=>{this.props.changeKey('detail')}}>
 							<Thumbnail style={{marginRight:10}} size={120} source={require('../resources/1.png')}/>
 							<CardItem style={this.styles.header}>
 								<Text>{this.state.username}</Text>
@@ -84,7 +84,7 @@ export default class UserInfo extends Component {
 								)
 							}
 						})()}
-						<CardItem button>
+						<CardItem button onPress={()=>{this.props.changeKey('setting')}}>
 							<Icon  name="ios-settings"/>
 							<Text>设置</Text>
 							<Right>
@@ -93,7 +93,7 @@ export default class UserInfo extends Component {
 						</CardItem>
 						<CardItem button>
 							<Icon name="ios-notifications"/>
-							<Text>通知</Text>
+							<Text>消息</Text>
 							<Right>
 								<Icon name="ios-arrow-forward"/>
 							</Right>

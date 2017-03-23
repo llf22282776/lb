@@ -2,8 +2,8 @@
  * Created by 鳌天 on 2017/2/16.
  */
 import React, { Component } from 'react';
-import { Container, Content, Form, Item, Input, Card, Label, Image, CardItem} from 'native-base';
-
+import { Container, Content, Form, Item, Input, Card, Label, CardItem, Button,Text,Right,Left} from 'native-base';
+import {Image} from 'react-native';
 export default class LoginPage extends Component {
 	
 	constructor(props) {
@@ -16,14 +16,7 @@ export default class LoginPage extends Component {
 			account:'',
 			password:''
 		};
-		
-		
-		this.styles = {
-			img: {
-				width: "80%",
-				height: 200
-			}
-		}
+
 	};
 	
 	
@@ -39,47 +32,52 @@ export default class LoginPage extends Component {
 		
 		//校验账户合法性
 		this.setState({canLogin:true});
-		this.props.push({key: 'home'})
+		// this.props.push({key: 'home'})
 	};
 
-	onRegister = () => {
-		this.props.push({key:'register'})
-	};
-
-	onForget = () => {
-		this.props.push({key:'forget'})
-	};
 
 	render(){
 		return (
 			<Container>
 				<Content>
-					<Card>
-						<CardItem>
-							<Image style={this.styles.img}/>
+					<Card style={{marginTop:'20%'}}>
+						<CardItem >
+							<Image source={require('../resources/login-background.jpg')}
+							       style={{
+						                height:150,
+						                width:'100%'
+							       }}/>
 						</CardItem>
 						<Form>
-							<Item floatingLabel>
+							<Item>
 								<Label>Username</Label>
-								<Input onChangeText={this.onChangeAccount}/>
+								<Input/>
 							</Item>
-							<Item floatingLabel last>
-								<Label>Password</Label>
-								<Input onChangeText={this.onChangePassWord}/>
+							<Item>
+								<Label>PassWord</Label>
+								<Input/>
 							</Item>
 						</Form>
-						<Button light onPress={this.onLogin}>
-							<Text>登录</Text>
-						</Button>
-						<Button light onPress={this.onRegister()}>
-							<Text>注册</Text>
-						</Button>
-						<Button light onPress={this.onForget()}>
-							<Text>忘记密码</Text>
-						</Button>
+						<CardItem style={{flex:1,flexDirection:'row',}}>
+							<Button style={styles.button}>
+								<Text>Login</Text>
+							</Button>
+							<Button style={styles.button}>
+								<Text>Register</Text>
+							</Button>
+							<Button style={styles.button}>
+								<Text>Forget</Text>
+							</Button>
+						</CardItem>
 					</Card>
 				</Content>
 			</Container>
 		);
+	}
+}
+
+const styles ={
+	button:{
+		margin:10
 	}
 }

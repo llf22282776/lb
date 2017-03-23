@@ -37,7 +37,7 @@ export default class RegisterPage extends Component {
 
 						<ListItem>
 							<InputGroup>
-								<Input placeholder="邮箱" />
+								<Input placeholder="手机号" />
 							</InputGroup>
 						</ListItem>
 						<ListItem>
@@ -52,12 +52,17 @@ export default class RegisterPage extends Component {
 						</ListItem>
 						<ListItem>
 							<InputGroup>
-								<Input placeholder="电话" keyboardType="numeric" />
+								<Input placeholder="昵称"/>
+							</InputGroup>
+						</ListItem>
+						<ListItem>
+							<InputGroup>
+								<Input placeholder="邮箱"  />
 							</InputGroup>
 						</ListItem>
 						
 					</List>
-					<Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }} onPress={this.props.push}>
+					<Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }}>
 						注册
 					</Button>
 				</Content>

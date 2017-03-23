@@ -7,7 +7,7 @@ import {Container} from 'native-base';
 
 import UserPage from './UserPage';
 import UserDetailPage from './UserDetailPage';
-
+import SettingPage from './settingPage';
 class My extends Component{
 	
 	constructor(props){
@@ -23,6 +23,8 @@ class My extends Component{
 				return <UserPage changeKey={this.changeKey}/>;
 			case 'detail':
 				return <UserDetailPage changeKey={this.changeKey} />
+			case 'setting':
+				return <SettingPage changeKey={this.changeKey}/>
 		}
 	};
 	
