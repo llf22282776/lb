@@ -1,6 +1,3 @@
-/**
- * react-native app ios entrance
- */
 
 'use strict';
 

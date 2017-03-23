@@ -14,6 +14,6 @@ export default connect(
     }),
     (dispatch) => (bindActionCreators({
         push,
-        pop,
+        pop
     }, dispatch))
 )(Navigator);

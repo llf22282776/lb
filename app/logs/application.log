@@ -1,0 +1,108 @@
+2017-03-22 16:23:14,445 - [INFO] - from org.nd4j.linalg.factory.Nd4jBackend in http-nio-8080-exec-1
+                
+Loaded [CpuBackend] backend
+
+2017-03-22 16:23:14,556 - [INFO] - from org.nd4j.nativeblas.NativeOpsHolder in http-nio-8080-exec-1
+                
+Number of threads used for NativeOps: 4
+
+2017-03-22 16:23:15,154 - [INFO] - from org.nd4j.nativeblas.Nd4jBlas in http-nio-8080-exec-1
+                
+Number of threads used for BLAS: 4
+
+2017-03-22 16:23:15,182 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+Starting vocabulary building...
+
+2017-03-22 16:23:15,238 - [INFO] - from org.deeplearning4j.models.word2vec.wordstore.VocabConstructor in http-nio-8080-exec-1
+                
+Sequences checked: [1016], Current vocabulary size: [1702]; Sequences/sec: [18472.73];
+
+2017-03-22 16:23:15,298 - [INFO] - from org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable in http-nio-8080-exec-1
+                
+Initializing syn1...
+
+2017-03-22 16:23:15,298 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+Building learning algorithms:
+
+2017-03-22 16:23:15,298 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+          building SequenceLearningAlgorithm: [PV-DBOW]
+
+2017-03-22 16:23:15,302 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+Starting learning process...
+
+2017-03-22 16:23:18,469 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+Epoch: [1]; Words vectorized so far: [5085];  Lines vectorized so far: [5080]; learningRate: [1.0E-4]
+
+2017-03-22 16:23:18,469 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+Time spent on training: 3166 ms
+
+2017-03-22 16:24:01,208 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-3
+                
+Starting vocabulary building...
+
+2017-03-22 16:24:01,241 - [INFO] - from org.deeplearning4j.models.word2vec.wordstore.VocabConstructor in http-nio-8080-exec-3
+                
+Sequences checked: [1016], Current vocabulary size: [1702]; Sequences/sec: [31750.00];
+
+2017-03-22 16:24:01,261 - [INFO] - from org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable in http-nio-8080-exec-3
+                
+Initializing syn1...
+
+2017-03-22 16:24:01,262 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-3
+                
+Building learning algorithms:
+
+2017-03-22 16:24:01,262 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-3
+                
+          building SequenceLearningAlgorithm: [PV-DBOW]
+
+2017-03-22 16:24:01,263 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-3
+                
+Starting learning process...
+
+2017-03-22 16:24:04,299 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-3
+                
+Epoch: [1]; Words vectorized so far: [5085];  Lines vectorized so far: [5080]; learningRate: [1.0E-4]
+
+2017-03-22 16:24:04,300 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-3
+                
+Time spent on training: 3037 ms
+
+2017-03-22 16:24:18,342 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+Starting vocabulary building...
+
+2017-03-22 16:24:18,361 - [INFO] - from org.deeplearning4j.models.word2vec.wordstore.VocabConstructor in http-nio-8080-exec-1
+                
+Sequences checked: [1016], Current vocabulary size: [1702]; Sequences/sec: [56444.44];
+
+2017-03-22 16:24:18,381 - [INFO] - from org.deeplearning4j.models.embeddings.inmemory.InMemoryLookupTable in http-nio-8080-exec-1
+                
+Initializing syn1...
+
+2017-03-22 16:24:18,381 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+Building learning algorithms:
+
+2017-03-22 16:24:18,381 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+          building SequenceLearningAlgorithm: [PV-DBOW]
+
+2017-03-22 16:24:18,382 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+Starting learning process...
+
+2017-03-22 16:24:21,407 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+Epoch: [1]; Words vectorized so far: [5085];  Lines vectorized so far: [5080]; learningRate: [1.0E-4]
+
+2017-03-22 16:24:21,407 - [INFO] - from org.deeplearning4j.models.sequencevectors.SequenceVectors in http-nio-8080-exec-1
+                
+Time spent on training: 3025 ms
+

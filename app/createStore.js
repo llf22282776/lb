@@ -10,6 +10,7 @@ import createLogger from 'redux-logger';
 import storage from './config/asyncStorageConf';
 import navigatorReducer from './reducers/navigatorReducer';
 import searchReducer from './reducers/searchReducer';
+import updateUserInfoReducer from './reducers/updateUserInfoReducer';
 
 global.storage = storage;
 
@@ -19,6 +20,7 @@ const store = createStore(
     combineReducers({
         navigator: navigatorReducer,
         search: searchReducer,
+        user: updateUserInfoReducer,
     }),
     {},  //initialState
     applyMiddleware(thunk, promiseMiddleware(), logger)

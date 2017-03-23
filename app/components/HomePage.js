@@ -22,6 +22,7 @@ import getTheme from '../themes';
 import myTheme from '../themes/myThemes/baseTheme';
 import CommunityPage from '../components/CommunityPage';
 import SearchPageContainer from '../containers/SearchPageContainer';
+import UserInfo from '../components/UserPage';
 
 const headerText = {
     community: '社区',
@@ -60,10 +61,7 @@ export default class HomePage extends Component {
                             <Title>{headerText[selectedTab]}</Title>
                             </Body>
                         </Header>
-                        <Content>
-                            <Title>MyPage</Title>
-                            <Text>mypagecontent</Text>
-                        </Content>
+                        <UserInfo push={this.props.push} pop={this.props.pop}/>
                     </View>
                     <Footer>
                         <FooterTab>
@@ -90,7 +88,7 @@ export default class HomePage extends Component {
 const styles = {
     hidden: {
         overflow: 'hidden',
-        opacity: 0,
+        opacity: 0
     },
     sceneContainer: {
         position: 'absolute',

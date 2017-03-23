@@ -1,21 +1,67 @@
 /**
- * Created by bitholic on 2017/2/24.
+ * Created by 鳌天 on 2017/2/2.
  */
-'use strict';
+import React, { Component } from 'react';
+import { Container, Content, List, ListItem, InputGroup, Input, Icon, Text, Picker, Button } from 'native-base';
 
-import React, {Component, PropTypes} from 'react';
-import {Container, Title, Text, Button} from 'native-base';
+const Item = Picker.Item;
 
 export default class RegisterPage extends Component {
-    render() {
-        const {push, pop} = this.props;
-        return (
-            <Container>
-                <Title>This is the register page</Title>
-                <Button light onPress={() => pop()}>
-                    <Text>Back</Text>
-                </Button>
-            </Container>
-        )
-    }
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			selectedItem: undefined,
+			selected1: 'key0',
+			results: {
+				items: []
+			}
+		};
+	}
+	onValueChange(value) {
+		this.setState({
+			selected1: value,
+		});
+	}
+	render() {
+
+		return (
+			<Container>
+				<Content>
+					<List>
+						<ListItem>
+							<InputGroup>
+								<Input placeholder="用户名" />
+							</InputGroup>
+						</ListItem>
+
+						<ListItem>
+							<InputGroup>
+								<Input placeholder="邮箱" />
+							</InputGroup>
+						</ListItem>
+						<ListItem>
+							<InputGroup>
+								<Input placeholder="密码" secureTextEntry />
+							</InputGroup>
+						</ListItem>
+						<ListItem>
+							<InputGroup>
+								<Input placeholder="确认密码" secureTextEntry />
+							</InputGroup>
+						</ListItem>
+						<ListItem>
+							<InputGroup>
+								<Input placeholder="电话" keyboardType="numeric" />
+							</InputGroup>
+						</ListItem>
+						
+					</List>
+					<Button style={{ alignSelf: 'center', marginTop: 20, marginBottom: 20 }} onPress={this.props.push}>
+						注册
+					</Button>
+				</Content>
+			</Container>
+		);
+	}
 }
