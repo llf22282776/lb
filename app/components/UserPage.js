@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import {Button, Container, Thumbnail, Text ,Content,Right,Footer,Card,Icon,CardItem} from 'native-base';
-
+import {Button, Body, Container, Thumbnail, Text ,Content,Right,Left,Footer,Card,Icon,CardItem} from 'native-base';
+import {View} from 'react-native';
 export default class UserInfo extends Component {
     constructor(props) {
 	    super(props);
 		this.state = {
 			topicShow:false,
 			username:"luoop",
-			account:"130666"
-		}
+			account:"130666",
+		};
 
 	    this.styles = {
 	        rowButton:{
@@ -20,6 +20,7 @@ export default class UserInfo extends Component {
 
 	topicClick = () =>{
 		this.setState({topicShow:!this.state.topicShow});
+		console.log(this.state.topicShow);
 	}
 
 	render() {
@@ -32,13 +33,13 @@ export default class UserInfo extends Component {
 								<CardItem >
 									<Thumbnail style={{marginRight:20}} size={120} source={require('../resources/1.png')}/>
 									<Card>
-										<CardItem button >
+										<CardItem button>
 											<Text>{this.state.username}</Text>
 											<Right>
 												<Icon name="ios-arrow-forward" style={{marginRight:0}}/>
 											</Right>
 										</CardItem>
-										<CardItem button>
+										<CardItem disable>
 											<Text>路宝账户：{this.state.account}</Text>
 										</CardItem>
 									</Card>
@@ -49,44 +50,58 @@ export default class UserInfo extends Component {
 						<CardItem button>
 							<Icon name="ios-car"/>
 							<Text>绑定车辆</Text>
-							<Icon name="ios-arrow-forward" />
+							<Right>
+								<Icon name="ios-arrow-forward" />
+							</Right>
 						</CardItem>
 						<CardItem itemDvider/>
-						{()=>{
+
+						<CardItem button onPress={this.topicClick}>
+							<Icon name="ios-eye"/>
+							<Text>关注话题</Text>
+							<Right>
+								<Icon name={this.state.topicShow?'ios-arrow-up':'ios-arrow-down'}/>
+							</Right>
+						</CardItem>
+						{(()=>{
 							if(this.state.topicShow){
-								return(
-									<CardItem button onClik={this.topicClick}>
-										<Icon name="ios-eye"/>
-										<Text>关注话题</Text>
-										<Icon name="ios-arrow-down"/>
-									</CardItem>
-								)
-							}
-							else{
+								console.log(this.state.topicShow);
 								return(
 									<Content>
+										<Left>
 										<CardItem button>
-											<Text>#吐槽#</Text>
+											<Left>
+												<Text>#吐槽#</Text>
+											</Left>
 										</CardItem>
 										<CardItem button>
-											<Text>#汽车保养#</Text>
+											<Left>
+												<Text>#汽车保养#</Text>
+											</Left>
 										</CardItem>
 										<CardItem button>
-											<Text>#追责#</Text>
+											<Left>
+												<Text>#追责#</Text>
+											</Left>
 										</CardItem>
+										</Left>
 									</Content>
 								)
 							}
-						}}
+						})()}
 						<CardItem button>
-							<Icon name="ios-settings"/>
+							<Icon  name="ios-settings"/>
 							<Text>设置</Text>
-							<Icon name="ios-arrow-forward"/>
+							<Right>
+								<Icon name="ios-arrow-forward"/>
+							</Right>
 						</CardItem>
 						<CardItem button>
 							<Icon name="ios-notifications"/>
 							<Text>通知</Text>
-							<Icon name="ios-arrow-forward"/>
+							<Right>
+								<Icon name="ios-arrow-forward"/>
+							</Right>
 						</CardItem>
 					</Card>
 				</Content>
