@@ -6,45 +6,40 @@ export default class UserInfo extends Component {
 	    super(props);
 		this.state = {
 			topicShow:false,
-			username:"luoop",
-			account:"130666",
+			username:"luoop\n",
+			account:"130666"
 		};
-
+	    this.key = this.props.key;
+	    
 	    this.styles = {
-	        rowButton:{
-	            height:100,
-		        flex:1
-	        }
-	    }
-    }
+		    rowButton: {
+			    height: 100,
+			    flex: 1
+		    },
+		    header: {
+			    flex: 1,
+			    flexDirection: 'column'
+		    }
 
+	    };
+    }
+	
 	topicClick = () =>{
 		this.setState({topicShow:!this.state.topicShow});
 		console.log(this.state.topicShow);
-	}
-
+	};
+	
 	render() {
 		return (
-			<Container>
-				<Content>
+			<Container >
+				<Content >
 					<Card>
-						<CardItem>
-							<Card>
-								<CardItem >
-									<Thumbnail style={{marginRight:20}} size={120} source={require('../resources/1.png')}/>
-									<Card>
-										<CardItem button>
-											<Text>{this.state.username}</Text>
-											<Right>
-												<Icon name="ios-arrow-forward" style={{marginRight:0}}/>
-											</Right>
-										</CardItem>
-										<CardItem disable>
-											<Text>路宝账户：{this.state.account}</Text>
-										</CardItem>
-									</Card>
-								</CardItem>
-							</Card>
+						<CardItem onPress={()=>{this.props.changeKey('detail')}}>
+							<Thumbnail style={{marginRight:10}} size={120} source={require('../resources/1.png')}/>
+							<CardItem style={this.styles.header}>
+								<Text>{this.state.username}</Text>
+								<Text>路宝账户：{this.state.account}</Text>
+							</CardItem>
 						</CardItem>
 						<CardItem itemDvider/>
 						<CardItem button>
@@ -109,3 +104,4 @@ export default class UserInfo extends Component {
 		);
 	}
 }
+
