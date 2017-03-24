@@ -79,7 +79,7 @@ export default function questionReducer(state = initialState, action = {}) {
             return {
                 ...state,
                 fetching: false,
-                answers: action.payload,
+                answers: action.payload.answers,
                 error: undefined,
             };
         case types.SUBMIT_QUESTION_REJECTED:

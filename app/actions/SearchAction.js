@@ -2,7 +2,7 @@
  * Created by bitholic on 2017/2/16.
  */
 import * as types from '../actions/actionTypes';
-import fetch from 'isomorphic-fetch';
+//import fetch from 'isomorphic-fetch';
 
 export const changeQuestion = (text) => ({
     type: types.CHANGE_QUESTION,
@@ -31,7 +31,8 @@ export const stopInputQuestion = () => ({
     type: types.STOP_INPUT_QUESTION,
 });
 
-export const submitQuestion = () => ({
+export const submitQuestion = (question) => ({
     type: types.SUBMIT_QUESTION,
-    payload: fetch('http://localhost:8080/answers.json',{headers: {'Cache-Control': 'no-cache'}}).then(response => response.json())
+    //payload: fetch('http://localhost:8080/answers.json',{headers: {'Cache-Control': 'no-cache'}}).then(response => response.json())
+    payload: fetch('http://121.201.29.244:8080/qabot/api/answers?question='+question, {headers: {'Cache-Control': 'no-cache'}}).then(response => response.json())
 });

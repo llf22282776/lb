@@ -24,7 +24,9 @@ export default function userInfoReducer(state = initialState, action = {}) {
 			return Object.assign({},state,action.payload);
 		case types.UPDATE_PASSWORD:
 			return Object.assign({},state,action.payload);
-		case types.GET_USER:
-			return Object.assign({},state,action.payload)
+        case types.GET_USER:
+			return Object.assign({},state,action.payload);
+        default:
+            return state;
 	}
 }

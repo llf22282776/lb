@@ -18,7 +18,7 @@ export default class RegisterPage extends Component {
 			}
 		};
 	}
-	onValueChange(value: string) {
+	onValueChange(value) {
 		this.setState({
 			selected1: value,
 		});

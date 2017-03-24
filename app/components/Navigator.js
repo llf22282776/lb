@@ -5,10 +5,11 @@
 import React, {Component, PropTypes} from 'react';
 import {NavigationExperimental} from 'react-native';
 import HomePageContainer from '../containers/HomePageContainer';
-import LoginPage from '../components/Login';
-import RegisterPage from './RegisterPage';
+import LoginPage from './LoginPage';
+import RegisterPage from '../components/RegisterPage';
 import ForgetPasswordPage from '../components/ForgetPasswordPage';
 import AnswerDetailPage from '../components/AnswerDetailPage';
+import AddQuestionPage from '../components/AddQuestionPage';
 import UserInfo from './UserPage';
 const {CardStack} = NavigationExperimental;
 
@@ -36,6 +37,7 @@ export default class Navigator extends Component {
 
     renderScene(sceneProps) {
         const route = sceneProps.scene.route;
+        console.log(route);
         switch (route.key) {
             case 'home':
                 return (
@@ -78,9 +80,18 @@ export default class Navigator extends Component {
                         pop={this.props.pop}
                     />
                 );
+            case 'addQuestion':
+                return (
+                    <AddQuestionPage
+                        {...route.props}
+                        push={this.props.push}
+                        pop={this.props.pop}
+                    />
+                );
             case 'userInfo':
-                return(
+                return (
                     <UserInfo
+                        {...route.props}
                         push={this.props.push}
                         pop={this.props.pop}
                     />

@@ -1,57 +1,32 @@
 /**
  * Created by 鳌天 on 2017/2/25.
  */
-import React,{Component} from 'react';
-import {
-	Header,
-	Container,
-	Content,
-	Card,
-	CardItem,
-	Text,
-	Thumbnail,
-	Right,
-	Button,
-	Left,
-	Icon
-}from 'native-base';
+import React,{Component} from 'react-native';
+import {Container, Content, Card, CardItem, Text, Thumbnail, Right, Icon} from 'native-base';
 
 class UserDetailPage extends Component{
 	// 构造
-	constructor(props) {
-		super(props);
+	  constructor(props) {
+	    super(props);
 	    // 初始状态
 	    this.state = {
-		    user:"luoop",
+		    options:["修改密码","绑定邮箱"],
+		    user:"名字",
 		    account:"1332165846",
 		    sex:"MAN"
 	    };
-	}
-	changeSex = () => {
-		changedSex = (this.state.sex === "MAN")?"WOMAN":"MAN";
-		this.setState({sex:changedSex});
-		// alert(this.state.sex);
-	};
-	back = () => {
-		this.props.changeKey('user');
-	};
-	render(){
+	  }
 
+	render(){
 		return(
 			<Container>
-				<Header>
-					<Left>
-						<Button onPress={this.back}>
-							<Icon name="ios-arrow-back"/>
-						</Button>
-					</Left>
-				</Header>
 				<Content>
 					<Card>
 						<CardItem>
 							<Text>头像</Text>
 							<Right>
 								<Thumbnail style={{marginRight:20}} size={120} source={require('../resources/1.png')}/>
+								<Icon name="arrow-forward"/>
 							</Right>
 						</CardItem>
 						<CardItem>
@@ -69,30 +44,33 @@ class UserDetailPage extends Component{
 					</Card>
 
 					<Card>
-						<CardItem button onPress={this.changeSex}>
+						<CardItem>
 							<Text>性别</Text>
-							<Right>
-								{(()=>{
-									if(this.state.sex == 'MAN'){
-										return <Icon name="ios-man-outline"/>
+							{
+								() =>{
+									if(this.state.sex==="MAN"){
+										return <Icon name="ios-man"/>;
 									}else{
-										return <Icon name='ios-woman-outline'/>
+										return <Icon name="iso-woman"/>
 									}
-								})()}
-							</Right>
+								}
+							}
+							<Icon name="arrow-forward"/>
 						</CardItem>
-						<CardItem>
-							<Text>修改密码</Text>
-							<Right>
-								<Icon name="ios-arrow-forward"/>
-							</Right>
-						</CardItem>
-						<CardItem>
-							<Text>绑定邮箱</Text>
-							<Right>
-								<Icon name="ios-arrow-forward"/>
-							</Right>
-						</CardItem>
+						{
+							()=>{this.state.options.map(
+								(item)=>{
+									return(
+										<CardItem>
+											<Text>{item}</Text>
+											<Right>
+												<Icon name="arrow-forward"/>
+											</Right>
+										</CardItem>
+									)
+								}
+							)}
+						}
 					</Card>
 				</Content>
 			</Container>

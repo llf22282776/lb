@@ -14,11 +14,10 @@ import {
 
 export default connect(
 	(state) => ({
-		user: state.user
+		user: state.user,
 	}),
 	(dispatch) => ({
-		getUserName: (text) => dispatch(getUser(text)).catch(err => {
-		}),
+		getUserName: (text) => dispatch(getUser(text)).catch(err => {}),
 		updateEmail: (email) => dispatch(updateEmail(email)),
 		updatePassword: (pwd) => dispatch(updatePassWord(pwd)),
 		updateUserName: (name) => dispatch(updateUserName(name))

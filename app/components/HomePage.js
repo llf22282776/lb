@@ -20,10 +20,12 @@ import {
 import {View} from 'react-native';
 import getTheme from '../themes';
 import myTheme from '../themes/myThemes/baseTheme';
+import CommunityPage from '../components/CommunityPage';
 import SearchPageContainer from '../containers/SearchPageContainer';
+import UserInfo from '../components/UserPage';
 
 const headerText = {
-    community: '路宝社区',
+    community: '社区',
     qa: '问答',
     my: '我的'
 };
@@ -38,42 +40,29 @@ export default class HomePage extends Component {
         return (
             <StyleProvider style={getTheme(myTheme)}>
                 <Container>
-                    <Container>
-                        <View key='community'
-                              style={[styles.sceneContainer, (selectedTab === 'community' ? {} : styles.hidden)]}
-                              pointerEvents={selectedTab === 'community' ? 'auto' : 'none'}
-                              removeClippedSubviews={!(selectedTab === 'community')}>
-                            <Header>
-                                <Body>
-                                <Title>{headerText[selectedTab]}</Title>
-                                </Body>
-                            </Header>
-                            <Content>
-                                <Title>TodoList:</Title>
-                                <Text>weather</Text>
-                            </Content>
-                        </View>
-                        <View key='qa'
-                              style={[styles.sceneContainer, (selectedTab === 'qa' ? {} : styles.hidden)]}
-                              pointerEvents={selectedTab === 'qa' ? 'auto' : 'none'}
-                              removeClippedSubviews={!(selectedTab === 'qa')}>
-                            <SearchPageContainer push={this.props.push} pop={this.props.pop}/>
-                        </View>
-                        <View key='my'
-                              style={[styles.sceneContainer, (selectedTab === 'my' ? {} : styles.hidden)]}
-                              pointerEvents={selectedTab === 'my' ? 'auto' : 'none'}
-                              removeClippedSubviews={!(selectedTab === 'my')}>
-                            <Header>
-                                <Body>
-                                <Title>{headerText[selectedTab]}</Title>
-                                </Body>
-                            </Header>
-                            <Content>
-                                <Title>MyPage</Title>
-                                <Text>mypagecontent</Text>
-                            </Content>
-                        </View>
-                    </Container>
+                    <View key='community'
+                          style={[styles.sceneContainer, (selectedTab === 'community' ? {} : styles.hidden)]}
+                          pointerEvents={selectedTab === 'community' ? 'auto' : 'none'}
+                          removeClippedSubviews={!(selectedTab === 'community')}>
+                        <CommunityPage push={this.props.push} pop={this.props.pop}/>
+                    </View>
+                    <View key='qa'
+                          style={[styles.sceneContainer, (selectedTab === 'qa' ? {} : styles.hidden)]}
+                          pointerEvents={selectedTab === 'qa' ? 'auto' : 'none'}
+                          removeClippedSubviews={!(selectedTab === 'qa')}>
+                        <SearchPageContainer push={this.props.push} pop={this.props.pop}/>
+                    </View>
+                    <View key='my'
+                          style={[styles.sceneContainer, (selectedTab === 'my' ? {} : styles.hidden)]}
+                          pointerEvents={selectedTab === 'my' ? 'auto' : 'none'}
+                          removeClippedSubviews={!(selectedTab === 'my')}>
+                        <Header>
+                            <Body>
+                            <Title>{headerText[selectedTab]}</Title>
+                            </Body>
+                        </Header>
+                        <UserInfo push={this.props.push} pop={this.props.pop}/>
+                    </View>
                     <Footer>
                         <FooterTab>
                             <Button active={selectedTab === 'community'} onPress={() => tab('community')}>
@@ -106,6 +95,6 @@ const styles = {
         top: 0,
         left: 0,
         right: 0,
-        bottom: 0
+        bottom: 40,
     },
 };
