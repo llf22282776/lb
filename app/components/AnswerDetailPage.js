@@ -50,9 +50,13 @@ export default class AnswerDetailPage extends Component {
                 <Content>
                     <Card>
                         <CardItem header bordered>
-                            <Text style={{color: '#000'}}>{this.props.qa.question}</Text>
+                            <Text style={{color: '#000'}}>{this.props.question}</Text>
                         </CardItem>
-                        {this.renderItems(this.props.qa.answers)}
+                        <CardItem bordered>
+                            <Body>
+                            <Text>{this.props.answer}</Text>
+                            </Body>
+                        </CardItem>
                         <CardItem>
                             <Text style={{fontSize: 10}}>如果没有解答您的问题，可尝试变换句式重新搜索！</Text>
                         </CardItem>

@@ -30,7 +30,7 @@ export default connect(
         }),
         startInputQuestion: () => dispatch(startInputQuestion()),
         stopInputQuestion: () => dispatch(stopInputQuestion()),
-        submitQuestion: () => dispatch(submitQuestion()).catch(err => {
+        submitQuestion: (question) => dispatch(submitQuestion(question)).catch(err => {
         }),
     }),
 )(SearchPage);

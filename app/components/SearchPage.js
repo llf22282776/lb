@@ -56,7 +56,7 @@ export default class SearchPage extends Component {
                                }}
                                onSubmitEditing={() => {
                                    if (search.question !== '') {
-                                       submitQuestion();
+                                       submitQuestion(search.question);
                                        this.setState({
                                            lastSubmitText: search.question,
                                            searched: true,
@@ -162,20 +162,15 @@ export default class SearchPage extends Component {
 
     renderResults(answers) {
         if (answers instanceof Array) {
-            return answers.map((qa, id) => {
+            return answers.map((answer, id) => {
                 return (
                     <ListItem
                         key={id}
                         style={{paddingHorizontal: 3}}
-                        onPress={() => this.props.push({key: 'answerDetail', qa: qa})}
+                        onPress={() => this.props.push({key: 'answerDetail', answer: answer, question: this.props.search.question})}
                     >
                         <Body>
-                        <Text style={{
-                            fontWeight: 'bold',
-                            fontSize: 15,
-                            color: '#007aff'
-                        }}>{getSubString(qa.question, 19)}</Text>
-                        <Text style={{fontSize: 14, paddingTop: 12}}>{getSubString(qa.answers[0], 43)}</Text>
+                        <Text style={{fontSize: 14, paddingTop: 12}}>{getSubString(answer, 43)}</Text>
                         </Body>
                         <Icon name='ios-arrow-forward' style={{fontSize: 20, paddingRight: 8, }}/>
                     </ListItem>
@@ -184,6 +179,14 @@ export default class SearchPage extends Component {
         }
     }
 }
+
+/*
+<Text style={{
+    fontWeight: 'bold',
+    fontSize: 15,
+    color: '#007aff'
+}}>{getSubString(qa.question, 19)}</Text>
+*/
 
 const styles = {
     hidden: {
