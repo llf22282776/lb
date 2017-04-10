@@ -8,6 +8,7 @@ import {Container} from 'native-base';
 import UserPage from './UserPage';
 import UserDetailPage from './UserDetailPage';
 import SettingPage from './settingPage';
+
 class My extends Component{
 	
 	constructor(props){

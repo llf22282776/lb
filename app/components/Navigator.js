@@ -10,7 +10,9 @@ import RegisterPage from '../components/RegisterPage';
 import ForgetPasswordPage from '../components/ForgetPasswordPage';
 import AnswerDetailPage from '../components/AnswerDetailPage';
 import AddQuestionPage from '../components/AddQuestionPage';
+import UserDetailPage from './UserDetailPage';
 import UserInfo from './UserPage';
+import SettingPage from './settingPage';
 const {CardStack} = NavigationExperimental;
 
 export default class Navigator extends Component {
@@ -91,6 +93,22 @@ export default class Navigator extends Component {
             case 'userInfo':
                 return (
                     <UserInfo
+                        {...route.props}
+                        push={this.props.push}
+                        pop={this.props.pop}
+                    />
+                )
+            case 'userDetail':
+                return(
+                    <UserDetailPage
+                        {...route.props}
+                        push={this.props.push}
+                        pop={this.props.pop}
+                    />
+                )
+            case 'setting':
+                return(
+                    <SettingPage
                         {...route.props}
                         push={this.props.push}
                         pop={this.props.pop}

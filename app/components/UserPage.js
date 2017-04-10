@@ -43,7 +43,7 @@ export default class UserInfo extends Component {
             <Container>
                 <Content>
                     <Card>
-                        <CardItem>
+                        <CardItem button onPress={()=>{this.props.push({key:'userDetail'})}}>
                             <Left>
                                 <Thumbnail source={require('../resources/1.png')}/>
                                 <Body>
@@ -93,12 +93,12 @@ export default class UserInfo extends Component {
                         </Right>
                     </ListItem>
                     <ListItem itemDivider style={{backgroundColor: 'transparent'}}/>
-                    <ListItem icon>
+                    <ListItem icon button onPress={()=>{this.props.push({key:'setting'})}}>
                         <Left>
                             <Icon name="ios-settings-outline"/>
                         </Left>
                         <Body>
-                        <Text>设置</Text>
+                            <Text>设置</Text>
                         </Body>
                         <Right>
                             <Icon name="ios-arrow-forward"/>
@@ -109,7 +109,7 @@ export default class UserInfo extends Component {
                             <Icon name="ios-car-outline"/>
                         </Left>
                         <Body>
-                        <Text>我的车辆</Text>
+                            <Text>我的车辆</Text>
                         </Body>
                         <Right>
                             <Text>暂未绑定</Text>
@@ -151,9 +151,9 @@ export default class UserInfo extends Component {
                         </Right>
                     </ListItem>
                     <ListItem itemDivider style={{backgroundColor: 'transparent'}}/>
-                    <ListItem>
+                    <ListItem button onPress={this.props.pop}>
                         <Body>
-                        <Title style={{color: 'red'}}>退出登录</Title>
+                            <Title style={{color: 'red'}}>退出登录</Title>
                         </Body>
                     </ListItem>
                 </Content>

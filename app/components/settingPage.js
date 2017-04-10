@@ -20,7 +20,7 @@ class SettingPage extends Component{
 	}
 	
 	onBack = () =>{
-		this.props.changeKey('user');
+		this.props.pop();
 	};
 	render(){
 		return(
@@ -42,12 +42,14 @@ class SettingPage extends Component{
 					<ListItem>
 						<Text>自动切换主题</Text>
 					</ListItem>
+					
 					<ListItem itemDivider>
 						<Text>账号设置</Text>
 					</ListItem>
 					<ListItem>
 						<Text>黑名单</Text>
 					</ListItem>
+					
 					<ListItem itemDivider>
 						<Text>关于和帮助</Text>
 					</ListItem>
