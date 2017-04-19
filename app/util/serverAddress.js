@@ -1,0 +1,10 @@
+export const SERVER_ROOT="http://192.168.99.2:8080/"
+export const GET_COVERSIONLIST="api/coversion/getCoversionList"
+export const GET_COMMENTLIST="api/comment/getCommentList"
+export const GET_COMMENTLIST_JSON="api/comment/getCommentList_json"
+export const INSERT_COVERSION="api/coversion/insertCoversion"
+export const INSERT_COMMENT="api/comment/insertComment" 
+export const SEARCH_COVERSIONLIST="api/coversion/searchCoversionList";
+export const IMAGE_ROOT="/static/images/";
+export const TEST="api/test";
+export const nid=2;
