@@ -139,7 +139,7 @@ export default class AddQuestionPage extends Component {
             console.log(data)
 
             data = data.coversionList;//从这个字段取东西
-            this.props.call_back(data);//刷新上一个界面
+            this.props.call_back();//刷新上一个界面
             this.returnLastOne();
         } catch (e) {
             //异常

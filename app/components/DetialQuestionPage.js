@@ -11,6 +11,8 @@ import {
     Content,
     Header,
     Left,
+    List,
+    ListItem,
     Body,
     Right,
     Thumbnail,
@@ -47,20 +49,27 @@ export default class DetialQuestionPage extends Component {
         this.toGetCommit = this.toGetCommit.bind(this);
         this.renderCommits = this.renderCommits.bind(this);
         this.fetchCommentList = this.fetchCommentList.bind(this);
-        this.callBack_ADDCOMMENT=this.callBack_ADDCOMMENT.bind(this);
-        this.imageRender=this.imageRender.bind(this);
+        this.callBack_ADDCOMMENT = this.callBack_ADDCOMMENT.bind(this);
+        this.imageRender = this.imageRender.bind(this);
+        this.renderSupportIcons = this.renderSupportIcons.bind(this);
+        this.supportOrNot = this.supportOrNot.bind(this);
+
         this.state = {
             dq_ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
-            commentList: []
+            commentList: [],
+            date: serverAddress.removeYearsAndSecond(this.props.date),
+            isSupport: this.props.isSupport,
+            supportNum: this.props.supportNum,
+            cid: this.props.cid
 
         }//初始化评论表
-        console.log(this.props);
+        console.log(this.state);
         this.toGetCommit(this.props.cid);
 
 
     }
     render() {
-       
+
 
         return (
             <Container>
@@ -72,7 +81,7 @@ export default class DetialQuestionPage extends Component {
                     </Left>
                 </Header>
                 <Content>
-                    <Card>
+                    <Card style={{ height: 300, width: 420 }}>
                         <CardItem header bordered style={{ paddingBottom: 4 }}>
                             <Left>
                                 <Thumbnail source={require('../resources/user_selected.png')} />
@@ -87,45 +96,47 @@ export default class DetialQuestionPage extends Component {
 
 
                         }
-                        <CardItem content style={{ paddingBottom: 4 }} >
+                        <CardItem content  >
                             <Text>{this.props.contentText}</Text>
                         </CardItem>
                         <CardItem footer style={{ paddingBottom: 4 }}>
                             <Left>
                                 <Button transparent iconLeft>
-                                    <Icon active name="thumbs-up" />
-                                    <Text>{this.props.supportNum}</Text>
+                                    {
+                                        this.renderSupportIcons(this.state)
+                                    }
+                                    <Text>{this.state.supportNum}</Text>
                                 </Button>
-                                
+
                                 <Button transparent iconLeft>
                                     <Icon active name="chatbubbles" />
                                     <Text>{this.props.commitNums}</Text>
                                 </Button>
-                                
+
                             </Left>
                             <Body>
                             </Body>
                             <Right>
-                                <Text>{this.props.date}</Text>
+                                <Text>{this.state.date}</Text>
                             </Right>
                         </CardItem>
-                    </Card>
-                    <Card>
                         <CardItem content>
-                            <Left>
-                                <Text> </Text>
-                            </Left>
-                            <Body>
-                                <Button iconLeft transparent onPress={this.commitOneQuestion}>
-                                    <Icon active name="md-create" />
-                                </Button>
-                            </Body>
-                            <Right>
-                                <Text> </Text>
-                            </Right>
+                            <Button info block onPress={this.commitOneQuestion}>
+                                <Icon active name="md-create" />
+                            </Button>
                         </CardItem>
                     </Card>
-                    <ListView enableEmptySections dataSource={(this.state.dq_ds).cloneWithRows(this.state.commentList)} renderRow={this.renderCommits} />
+                    <Card style={{ height: 1, width: 600 }}>
+
+                        <CardItem content>
+                            <Button block info transparent onPress={this.commitOneQuestion}>
+                                <Icon active name="md-create" />
+                            </Button>
+                        </CardItem>
+                    </Card>
+
+                    <ListView style={{ flex: 12, flexDirection: "column" }} enableEmptySections dataSource={(this.state.dq_ds).cloneWithRows(this.state.commentList)} renderRow={this.renderCommits} />
+
                 </Content>
             </Container>
         );
@@ -140,17 +151,29 @@ export default class DetialQuestionPage extends Component {
             key: "answerToQuestion",
             props: {
                 titleText: this.props.titleText, //把题目穿进去
-                cid:this.props.cid,
-                call_back:this.callBack_ADDCOMMENT
+                cid: this.props.cid,
+                call_back: this.callBack_ADDCOMMENT
             }
         };
+
         this.props.push(jsonObj);
 
 
     }
-    callBack_ADDCOMMENT(commentList){
+    renderSupportIcons() {
+
+        if (this.props.isSupport == true) {
+            return (<Icon style={{ color: "#ee4400" }} name="thumbs-up" onPress={() => { this.supportOrNot(this.props.cid, this.state.isSupport); }} />)
+        } else {
+            return (<Icon active name="thumbs-up" onPress={() => { this.supportOrNot(this.props.cid, this.state.isSupport); }} />)
+        }
+
+
+
+    }
+    callBack_ADDCOMMENT(commentList) {
         //更新
-        this.setState({commentList:commentList});
+        this.toGetCommit(this.props.cid);
 
 
     }
@@ -159,7 +182,7 @@ export default class DetialQuestionPage extends Component {
         this.fetchCommentList(cid);
 
     }
-   async fetchCommentList(cid1) {
+    async fetchCommentList(cid1) {
         //获取一次评论
 
         var url = serverAddress.SERVER_ROOT + serverAddress.GET_COMMENTLIST_JSON;
@@ -176,16 +199,17 @@ export default class DetialQuestionPage extends Component {
                         cid: cid1
                     })
                 });
-              console.log("评论response");
-             console.log(response);
+            console.log("评论response");
+            console.log(response);
 
             let data = await response.json();
-             console.log("评论json");
-             console.log(data);
-
+            console.log("评论json");
+            console.log(data);
+            console.log("commentList");
             var data = data.commentList;//从这个字段取东西
-            this.setState({ conversionList: data });
-            
+            console.log(data);
+            this.setState({ commentList: data });
+
         } catch (e) {
             //异常
             console.log(e);
@@ -197,35 +221,38 @@ export default class DetialQuestionPage extends Component {
 
     }
     renderCommits(data) {
-        console.log("正在加载评论！！！！！！！！");
+        var date = serverAddress.removeYearsAndSecond(data.date);
         //显示评论
         return (
-            <Card >
-                <CardItem header bordered style={{ paddingBottom: 4 }} >
-                    <Left>
-                        <Thumbnail source={require('../resources/qa_selected.png')} />
-                        <Body>
-                            <Text note>{data.nick}</Text>
-                        </Body>
-                    </Left>
-                </CardItem>
-                <CardItem content style={{ paddingBottom: 4 }}>
-                    <Text>{data.contentText}</Text>
-                </CardItem>
-                <CardItem footer style={{ paddingBottom: 4 }}>
-                    <Body>
-                    </Body>
-                    <Right>
-                        <Text>{data.date}</Text>
-                    </Right>
-                </CardItem>
-            </Card>
+            <ListItem>
+                <Thumbnail source={require('../resources/qa_selected.png')} />
+                <Body>
+                    <Text >{data.nick}</Text>
+                    <Text note>{data.content}</Text>
+                </Body>
+                <Right>
+                    <Text note>{date}</Text>
+                </Right>
+            </ListItem>
+
+
+
 
         );
 
     }
+    renderSupportIcons(rowData) {
 
-  imageRender(rowData) {
+        if (rowData.isSupport == true) {
+            return (<Icon style={{ color: "#ee4400" }} name="thumbs-up" onPress={() => { this.supportOrNot(rowData.cid, rowData.isSupport); }} />)
+        } else {
+            return (<Icon active name="thumbs-up" onPress={() => { this.supportOrNot(rowData.cid, rowData.isSupport); }} />)
+        }
+
+
+
+    }
+    imageRender(rowData) {
 
         console.log("图片地址" + rowData.url);
         if (rowData.url == "" || rowData.url === "" || rowData.url == null) {
@@ -240,8 +267,48 @@ export default class DetialQuestionPage extends Component {
         }
     }
 
+    async supportOrNot(cid, isSupportNow) {
+        //点赞或取消点赞
+        console.log("isSupportNow:" + isSupportNow)
+
+        var type = (isSupportNow == "true") ? 2 : 1;
+        console.log("isSupportNow:" + isSupportNow + " type:" + type);
+        var jsonObj = {
+            cid: cid,
+            nid: serverAddress.nid,
+            type: type, //如果是支持的状态，就发送取消，如果不是就发送支持
+        };
+        console.log(jsonObj);
+        var url = serverAddress.SERVER_ROOT + serverAddress.SUPPORT_COVERSION;
+        try {
+            let response = await fetch(
+                url,
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        cid: cid,
+                        nid: serverAddress.nid,
+                        type: type, //如果是支持的状态，就发送取消，如果不是就发送支持
+                    })
+                });
+            let data = await response.json();
+            if (data.nowState == "1") this.setState({ isSupport: true })
+            else this.setState({ isSupport: false })
+            console.log(data);
 
 
+        } catch (e) {
+            //异常
+            console.log(e);
+            Alert.alert("错误", "点赞失败！");
+        }
+
+
+
+    }
 
 
 

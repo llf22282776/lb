@@ -18,7 +18,8 @@ var jsonData = [
         nick: "bitholic",
         date: "2017-03-11 13:33:33",
         url: "",
-        index: 0
+        index: 0,
+        isSupprot: false,
 
     },
     {
@@ -29,9 +30,10 @@ var jsonData = [
         commitNums: 0,
         supportNum: 1,
         nick: "qiang",
-         date: "2017-03-11 13:33:33",
+        date: "2017-03-11 13:33:33",
         url: "1.jpg",
-        index: 1
+        index: 1,
+        isSupprot: false,
     },
     {
         nid: 1,
@@ -43,7 +45,8 @@ var jsonData = [
         nick: "bitholic",
         date: "2017-03-11 13:33:33",
         url: "",
-        index: 2
+        index: 2,
+        isSupprot: false,
     }
 ]
 
@@ -62,9 +65,10 @@ export default class CommunityPage extends Component {
         this.changeText_EVENT = this.changeText_EVENT.bind(this);
         this.fetchSearchCoversion = this.fetchSearchCoversion.bind(this);
         this.callback_ADDQUEST = this.callback_ADDQUEST1.bind(this);
-        this.fetchCoversion1 = this.fetchCoversion1.bind(this);
+        this.renderSupportIcons = this.renderSupportIcons.bind(this);
         this.imageRender = this.imageRender.bind(this);
         this.removeYearsAndSecond = this.removeYearsAndSecond.bind(this);
+        this.supportOrNot = this.supportOrNot.bind(this);
         this.state = {
             ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
             conversionList: [],
@@ -73,6 +77,7 @@ export default class CommunityPage extends Component {
             nid: serverAddress.nid,
             refresh: false
         }
+        this.fetchCoversion(serverAddress.nid);
     }
     render() {
         //return之前，先获取帖子，获取随机
@@ -109,7 +114,8 @@ export default class CommunityPage extends Component {
             date: this.state.conversionList[index].date,
             url: this.state.conversionList[index].url,
             index: this.state.conversionList[index].index,
-            callback_ADDQUEST: this.callback_ADDQUEST
+            callback_ADDQUEST: this.callback_ADDQUEST,
+            isSupport:this.state.conversionList[index].isSupport,
         }
         var jsonObj = {
             key: "detialQuestion",
@@ -128,8 +134,8 @@ export default class CommunityPage extends Component {
     }
     callback_ADDQUEST1() {
 
+        this.fetchCoversion(serverAddress.nid);
 
-        this.setState({ refresh: false });//
 
 
     }
@@ -177,34 +183,7 @@ export default class CommunityPage extends Component {
             this.setState({ conversionList: jsonData });
         }
     }
-    async fetchCoversion1() {
-        var url = serverAddress.SERVER_ROOT + serverAddress.TEST;
-        try {
-            let response = await fetch(
-                url,
-                {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "cid": 1
-                    })
 
-                });
-            console.log(response)
-            let data = await response.json();
-            console.log(data);
-            var data = data.coversionList;//从这个字段取东西
-            this.setState({ conversionList: data });
-            console.log(data);
-        } catch (e) {
-            //异常
-            console.log(e);
-            this.setState({ conversionList: jsonData });
-        }
-
-    }
     async fetchSearchCoversion(keyword) {
         var url = serverAddress.SERVER_ROOT + serverAddress.SEARCH_COVERSIONLIST;
         try {
@@ -246,7 +225,7 @@ export default class CommunityPage extends Component {
 
 
         var date = rowData.date;
-    
+
 
         //隐射函数
         return (
@@ -269,11 +248,13 @@ export default class CommunityPage extends Component {
                 <CardItem footer style={{ paddingBottom: 4 }}>
                     <Left>
                         <Button transparent>
-                            <Icon active name="thumbs-up" />
+                            {
+                                this.renderSupportIcons(rowData)
+                            }
                             <Text>{rowData.supportNum}</Text>
                         </Button>
 
-                        <Button transparent >
+                        <Button transparent onPress={() => { this.toQuestionDetial(rowData.index); }}>
                             <Icon active name="chatbubbles" onPress={() => { this.toQuestionDetial(rowData.index); }} />
                             <Text enableEmptySections children>{rowData.commitNums}</Text>
                         </Button>
@@ -281,11 +262,11 @@ export default class CommunityPage extends Component {
                     </Left>
                     <Body>
                     </Body>
-                        {
-                            //    this.imageRender(rowData)
-                            this.removeYearsAndSecond(rowData)  
-                            }
-                   
+                    {
+                        //    this.imageRender(rowData)
+                        this.removeYearsAndSecond(rowData)
+                    }
+
                 </CardItem>
             </Card>
         );
@@ -305,36 +286,81 @@ export default class CommunityPage extends Component {
             );
         }
     }
-    componentWillMount() {
-        if (this.state.refresh == false) {
-            this.fetchCoversion(serverAddress.nid);
 
-            this.setState({ refresh: true });
+    removeYearsAndSecond(rowData) {
+        var newDate = rowData.date;
+        //Alert.alert(newDate);
+        var stringList = newDate.split("-");//第一个是年,第二个是月
+
+        var mouth = stringList[1];
+
+
+        var str1 = stringList[2];
+
+        var stringList1 = str1.split(" ");//第一个是天
+        var day = stringList1[0];
+        str1 = stringList1[1];
+
+        var stringList2 = str1.split(":");//第一个是时，第二个是分，第三个是秒
+        var hours = stringList2[0];
+        var mins = stringList2[1];
+        var sec = stringList2[2];
+        newDate = mouth + "-" + day + " " + hours + ":" + mins;
+
+        return (<Right><Text>{newDate}</Text></Right>);
+
+    }
+    renderSupportIcons(rowData) {
+      
+        if (rowData.isSupport == "true") {
+            return (<Icon  style={{ color: "#ee4400" }} name="thumbs-up" onPress={() => { this.supportOrNot(rowData.cid, rowData.isSupport); }} />)
+        } else {
+            return (<Icon active name="thumbs-up" onPress={() => { this.supportOrNot(rowData.cid, rowData.isSupport); }} />)
         }
 
 
+
     }
-    removeYearsAndSecond(rowData) {
-         var newDate = rowData.date;
-         //Alert.alert(newDate);
-        var stringList=newDate.split("-");//第一个是年,第二个是月
-     
-        var mouth=stringList[1];
-
-
-        var str1=stringList[2];
-   
-        var  stringList1=str1.split(" ");//第一个是天
-        var day=stringList1[0];
-         str1=stringList1[1];
-
-         var stringList2=str1.split(":");//第一个是时，第二个是分，第三个是秒
-        var hours=stringList2[0];
-        var mins=stringList2[1];
-        var sec=stringList2[2];
-        newDate=mouth+"-"+day+" "+hours+":"+mins;
+    async supportOrNot(cid, isSupportNow) {
+        //点赞或取消点赞
+        console.log("isSupportNow:"+isSupportNow)
         
-        return (<Right><Text>{newDate}</Text></Right>);
+        var type = (isSupportNow == "true" ) ?  2 : 1;
+        console.log("isSupportNow:"+isSupportNow+" type:"+type) ;
+        var jsonObj = {
+            cid: cid,
+            nid: serverAddress.nid,
+            type: type, //如果是支持的状态，就发送取消，如果不是就发送支持
+        };
+        console.log(jsonObj);
+        var url = serverAddress.SERVER_ROOT + serverAddress.SUPPORT_COVERSION;
+        try {
+            let response = await fetch(
+                url,
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        cid: cid,
+                        nid: serverAddress.nid,
+                        type: type, //如果是支持的状态，就发送取消，如果不是就发送支持
+                    })
+                });
+            let data = await response.json();
+
+            console.log(data);
+            this.fetchCoversion(serverAddress.nid);//快速刷新
+
+        } catch (e) {
+            //异常
+            console.log(e);
+            Alert.alert("错误", "点赞失败！");
+        }
+
+
+
 
     }
 
