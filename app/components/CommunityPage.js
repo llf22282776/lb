@@ -70,12 +70,13 @@ export default class CommunityPage extends Component {
         this.removeYearsAndSecond = this.removeYearsAndSecond.bind(this);
         this.supportOrNot = this.supportOrNot.bind(this);
         this.state = {
-            ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
+            ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1  == r2 || r1 != r2  }),
             conversionList: [],
             indexCount: 0,
             keyword: "",
             nid: serverAddress.nid,
-            refresh: false
+            refresh: false,
+
         }
         this.fetchCoversion(serverAddress.nid);
     }
@@ -88,7 +89,7 @@ export default class CommunityPage extends Component {
                     <Item style={{ height: 25 }}>
                         <Icon name="search" onPress={this.EntryKey_pressEVENT} />
                         <Input placeholder="搜索" onChangeText={this.changeText_EVENT} />
-                        
+
                     </Item>
                 </Header>
 
@@ -104,6 +105,7 @@ export default class CommunityPage extends Component {
         )
     }
     toQuestionDetial(index) {
+
         var jsonprops = {
             nid: this.state.conversionList[index].nid,
             cid: this.state.conversionList[index].cid,
@@ -116,8 +118,10 @@ export default class CommunityPage extends Component {
             url: this.state.conversionList[index].url,
             index: this.state.conversionList[index].index,
             callback_ADDQUEST: this.callback_ADDQUEST,
-            isSupport:this.state.conversionList[index].isSupport,
+            isSupport: this.state.conversionList[index].isSupport,
         }
+        // console.log("我在打印json")
+        // console.log(jsonprops)
         var jsonObj = {
             key: "detialQuestion",
             props: jsonprops
@@ -127,8 +131,8 @@ export default class CommunityPage extends Component {
     }
     callback_ADDQUEST(coversionList1) {
         //发帖后，更新社区,需要信息吗0 0 ，暂时不需要，我也没想清楚
-        console.log(this);
-        console.log("call_backweiruufh");
+        //console.log(this);
+        // console.log("call_backweiruufh");
         this.setState({ coversionList: this.state.ds.cloneWithRows(coversionList1) });//????
 
 
@@ -143,6 +147,7 @@ export default class CommunityPage extends Component {
 
     EntryKey_pressEVENT() {
         //按下回车,搜索开始
+        //Alert.alert("搜索")
         this.fetchSearchCoversion(this.state.keyword);
     }
     changeText_EVENT(text) {
@@ -171,39 +176,44 @@ export default class CommunityPage extends Component {
                         'Content-Type': 'text/*'
                     },
                 });
-            console.log(response);
+
             let data = await response.json();
-            console.log(data);
+
             var data = data.coversionList;//从这个字段取东西
             this.setState({ conversionList: data });
-            console.log(data);
+
         } catch (e) {
-            //异常
-            console.log("异常");
-            console.log(e);
+
             this.setState({ conversionList: jsonData });
         }
     }
 
     async fetchSearchCoversion(keyword) {
-        var url = serverAddress.SERVER_ROOT + serverAddress.SEARCH_COVERSIONLIST+"?"+"keyword="+keyword;
+        var url = serverAddress.SERVER_ROOT + serverAddress.SEARCH_COVERSIONLIST + "?" + "keyword=" + keyword + "&" + "nid=" + serverAddress.nid;
+
         try {
             let response = await fetch(
                 url,
                 {
                     method: "GET",
-                 
-                   
+                    headers: {
+                        'Accept': '*/*',
+                        'Content-Type': 'text/*'
+                    }, 
+
                 });
             let data = await response.json();
 
             var data = data.coversionList;//从这个字段取东西
-            this.setState({ conversionList: data });
-
+            console.log("coversionList");
             console.log(data);
+            this.setState({ conversionList: data });
+            
+
+
         } catch (e) {
             //异常
-            console.log(e);
+            console.log(e)
             this.setState({ conversionList: jsonData });
         }
     }
@@ -220,7 +230,7 @@ export default class CommunityPage extends Component {
     mapFunction(rowData) {
 
         var date = rowData.date;
-
+        console.log(rowData);
 
         //隐射函数
         return (
@@ -269,7 +279,7 @@ export default class CommunityPage extends Component {
     }
     imageRender(rowData) {
 
-        console.log("图片地址" + rowData.url);
+        console.log("图片地址" + serverAddress.SERVER_ROOT + serverAddress.IMAGE_ROOT + rowData.url);
         if (rowData.url == "" || rowData.url === "" || rowData.url == null) {
             return null;
         }
@@ -283,8 +293,10 @@ export default class CommunityPage extends Component {
     }
 
     removeYearsAndSecond(rowData) {
-        var newDate = rowData.date;
+        //Alert.alert(rowData.date)
+        //var newDate = serverAddress.getDateFormat(rowData.date);
         //Alert.alert(newDate);
+        var newDate=rowData.date;
         var stringList = newDate.split("-");//第一个是年,第二个是月
 
         var mouth = stringList[1];
@@ -306,25 +318,25 @@ export default class CommunityPage extends Component {
 
     }
     renderSupportIcons(rowData) {
-      
+
         if (rowData.isSupport == "true") {
-            return (<Icon  style={{ color: "#ee4400" }} name="thumbs-up" onPress={() => { this.supportOrNot(rowData.cid, rowData.isSupport); }} />)
+            return (<Icon style={{ color: "#ee4400" }} name="thumbs-up" onPress={() => { this.supportOrNot(rowData.cid, rowData.isSupport); }} />)
         } else {
             return (<Icon active name="thumbs-up" onPress={() => { this.supportOrNot(rowData.cid, rowData.isSupport); }} />)
         }
     }
     async supportOrNot(cid, isSupportNow) {
         //点赞或取消点赞
-        console.log("isSupportNow:"+isSupportNow)
-        
-        var type = (isSupportNow == "true" ) ?  2 : 1;
-        console.log("isSupportNow:"+isSupportNow+" type:"+type) ;
+        //console.log("isSupportNow:"+isSupportNow)
+
+        var type = (isSupportNow == "true") ? 2 : 1;
+        // console.log("isSupportNow:"+isSupportNow+" type:"+type) ;
         var jsonObj = {
             cid: cid,
             nid: serverAddress.nid,
             type: type, //如果是支持的状态，就发送取消，如果不是就发送支持
         };
-        console.log(jsonObj);
+        // console.log(jsonObj);
         var url = serverAddress.SERVER_ROOT + serverAddress.SUPPORT_COVERSION;
         try {
             let response = await fetch(
@@ -342,7 +354,7 @@ export default class CommunityPage extends Component {
                 });
             let data = await response.json();
 
-            console.log(data);
+            // console.log(data);
             this.fetchCoversion(serverAddress.nid);//快速刷新
 
         } catch (e) {

@@ -1,3 +1,5 @@
+import {Alert } from 'react-native'
+
 export const SERVER_ROOT="http://192.168.99.2:8080/"
 export const GET_COVERSIONLIST="api/coversion/getCoversionList"
 export const GET_COMMENTLIST="api/comment/getCommentList"
@@ -17,9 +19,36 @@ export const STATE={
 export const nid=1;
 export const removeYearsAndSecond = (newDate) =>{
          //var newDate = rowData.date;
-         //Alert.alert(newDate);
-         newDate=getDateFormat(newDate);
-         console.log(newDate);
+ 
+        newDate=getDateFormat(newDate);
+       
+      
+        var stringList=newDate.split("-");//第一个是年,第二个是月
+     
+        var mouth=stringList[1];
+
+
+        var str1=stringList[2];
+   
+        var  stringList1=str1.split(" ");//第一个是天
+        var day=stringList1[0];
+         str1=stringList1[1];
+
+         var stringList2=str1.split(":");//第一个是时，第二个是分，第三个是秒
+        var hours=stringList2[0];
+        var mins=stringList2[1];
+        var sec=stringList2[2];
+        newDate=mouth+"-"+day+" "+hours+":"+mins;
+        
+        return newDate;
+
+    }
+    export const removeYearsAndSecond_1 = (newDate) =>{
+         //var newDate = rowData.date;
+ 
+    
+       
+      
         var stringList=newDate.split("-");//第一个是年,第二个是月
      
         var mouth=stringList[1];
@@ -96,7 +125,7 @@ export const  getNowFormatDate=()=> {
             CurrentDate += "0" + second;
         }
        
-        console.log(CurrentDate);
+        //console.log(CurrentDate);
         return CurrentDate;
     }
     export const  getDateFormat=(data)=> {
@@ -154,6 +183,6 @@ export const  getNowFormatDate=()=> {
             CurrentDate += "0" + second;
         }
         
-        console.log(CurrentDate);
+        //console.log(CurrentDate);
         return CurrentDate;
     }
