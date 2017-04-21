@@ -88,6 +88,7 @@ export default class CommunityPage extends Component {
                     <Item style={{ height: 25 }}>
                         <Icon name="search" onPress={this.EntryKey_pressEVENT} />
                         <Input placeholder="搜索" onChangeText={this.changeText_EVENT} />
+                        
                     </Item>
                 </Header>
 
@@ -185,18 +186,14 @@ export default class CommunityPage extends Component {
     }
 
     async fetchSearchCoversion(keyword) {
-        var url = serverAddress.SERVER_ROOT + serverAddress.SEARCH_COVERSIONLIST;
+        var url = serverAddress.SERVER_ROOT + serverAddress.SEARCH_COVERSIONLIST+"?"+"keyword="+keyword;
         try {
             let response = await fetch(
                 url,
                 {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        keyword: keyword
-                    })
+                    method: "GET",
+                 
+                   
                 });
             let data = await response.json();
 
@@ -221,8 +218,6 @@ export default class CommunityPage extends Component {
 
     }
     mapFunction(rowData) {
-
-
 
         var date = rowData.date;
 
@@ -317,9 +312,6 @@ export default class CommunityPage extends Component {
         } else {
             return (<Icon active name="thumbs-up" onPress={() => { this.supportOrNot(rowData.cid, rowData.isSupport); }} />)
         }
-
-
-
     }
     async supportOrNot(cid, isSupportNow) {
         //点赞或取消点赞
@@ -358,10 +350,6 @@ export default class CommunityPage extends Component {
             console.log(e);
             Alert.alert("错误", "点赞失败！");
         }
-
-
-
-
     }
 
 }

@@ -69,8 +69,6 @@ export default class DetialQuestionPage extends Component {
 
     }
     render() {
-
-
         return (
             <Container>
                 <Header>
@@ -121,19 +119,18 @@ export default class DetialQuestionPage extends Component {
                             </Right>
                         </CardItem>
                         <CardItem content>
-                            <Button info block onPress={this.commitOneQuestion}>
-                                <Icon active name="md-create" />
-                            </Button>
+                            <Left>
+                            </Left>
+                            <Body>
+                                <Button info block onPress={this.commitOneQuestion}>
+                                    <Icon active name="md-create" />
+                                </Button>
+                            </Body>
+                            <Right>
+                            </Right>
                         </CardItem>
                     </Card>
-                    <Card style={{ height: 1, width: 600 }}>
 
-                        <CardItem content>
-                            <Button block info transparent onPress={this.commitOneQuestion}>
-                                <Icon active name="md-create" />
-                            </Button>
-                        </CardItem>
-                    </Card>
 
                     <ListView style={{ flex: 12, flexDirection: "column" }} enableEmptySections dataSource={(this.state.dq_ds).cloneWithRows(this.state.commentList)} renderRow={this.renderCommits} />
 
@@ -162,7 +159,7 @@ export default class DetialQuestionPage extends Component {
     }
     renderSupportIcons() {
 
-        if (this.props.isSupport == true) {
+        if (this.state.isSupport == true) {
             return (<Icon style={{ color: "#ee4400" }} name="thumbs-up" onPress={() => { this.supportOrNot(this.props.cid, this.state.isSupport); }} />)
         } else {
             return (<Icon active name="thumbs-up" onPress={() => { this.supportOrNot(this.props.cid, this.state.isSupport); }} />)
@@ -173,6 +170,8 @@ export default class DetialQuestionPage extends Component {
     }
     callBack_ADDCOMMENT(commentList) {
         //更新
+        console.log("this:")
+        console.log(this)
         this.toGetCommit(this.props.cid);
 
 
@@ -243,7 +242,7 @@ export default class DetialQuestionPage extends Component {
     }
     renderSupportIcons(rowData) {
 
-        if (rowData.isSupport == true) {
+        if (rowData.isSupport == "true") {
             return (<Icon style={{ color: "#ee4400" }} name="thumbs-up" onPress={() => { this.supportOrNot(rowData.cid, rowData.isSupport); }} />)
         } else {
             return (<Icon active name="thumbs-up" onPress={() => { this.supportOrNot(rowData.cid, rowData.isSupport); }} />)
@@ -295,8 +294,14 @@ export default class DetialQuestionPage extends Component {
                     })
                 });
             let data = await response.json();
-            if (data.nowState == "1") this.setState({ isSupport: true })
-            else this.setState({ isSupport: false })
+            if (data.nowState == "1") {
+                this.setState({ isSupport: "true" });
+                this.setState({ supportNum: this.state.supportNum + 1 })
+            }
+            else {
+                this.setState({ isSupport: "false" });
+                this.setState({ supportNum: this.state.supportNum - 1 });
+            }
             console.log(data);
 
 

@@ -105,7 +105,7 @@ export default class AnswerToQuestionPage extends Component {
 
             var data = data.commentList;//从这个字段取东西
             this.call_back();
-            this.setState({ commentList: data });
+     
             this.returnLastOne();//返回界面
 
         } catch (e) {
@@ -188,27 +188,5 @@ export default class AnswerToQuestionPage extends Component {
         console.log(CurrentDate);
         return CurrentDate;
     }
-    removeYearsAndSecond(rowData) {
-        var newDate = rowData.date;
-        //Alert.alert(newDate);
-        var stringList = newDate.split("-");//第一个是年,第二个是月
-
-        var mouth = stringList[1];
-
-
-        var str1 = stringList[2];
-
-        var stringList1 = str1.split(" ");//第一个是天
-        var day = stringList1[0];
-        str1 = stringList1[1];
-
-        var stringList2 = str1.split(":");//第一个是时，第二个是分，第三个是秒
-        var hours = stringList2[0];
-        var mins = stringList2[1];
-        var sec = stringList2[2];
-        newDate = mouth + "-" + day + " " + hours + ":" + mins;
-
-        return (<Right><Text>{newDate}</Text></Right>);
-
-    }
+   
 }
