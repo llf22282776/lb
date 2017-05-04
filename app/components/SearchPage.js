@@ -18,6 +18,7 @@ import {
     Body,
     Right,
 } from 'native-base';
+import {TextInput} from 'react-native';
 import {View, Image} from 'react-native';
 import {getSubString} from '../util/getSubString';
 
@@ -102,7 +103,7 @@ export default class SearchPage extends Component {
             } else {
                 return (
                     <Content>
-                        { this.renderListItems(search.searchHelps) }
+                        {this.renderListItems(search.searchHelps)}
                     </Content>
                 );
             }
@@ -163,18 +164,20 @@ export default class SearchPage extends Component {
     renderResults(answers) {
         if (answers instanceof Array) {
             return answers.map((answer, id) => {
+                if(answer.length>=8){
                 return (
-                    <ListItem
-                        key={id}
-                        style={{paddingHorizontal: 3}}
-                        onPress={() => this.props.push({key: 'answerDetail', answer: answer, question: this.props.search.question})}
-                    >
-                        <Body>
-                        <Text style={{fontSize: 14, paddingTop: 12}}>{getSubString(answer, 43)}</Text>
-                        </Body>
-                        <Icon name='ios-arrow-forward' style={{fontSize: 20, paddingRight: 8, }}/>
-                    </ListItem>
-                )
+                        <ListItem
+                            key={id}
+                            style={{paddingHorizontal: 3}}
+                            onPress={() => this.props.push({key: 'answerDetail', answer: answer, question: this.props.search.question})}
+                        >
+                            <Body>
+                            <Text style={{fontSize: 14, paddingTop: 12}}>{getSubString(answer, 43)}</Text>
+                            </Body>
+                            <Icon name='ios-arrow-forward' style={{fontSize: 20, paddingRight: 8, }}/>
+                        </ListItem>
+                    )}
+
             })
         }
     }

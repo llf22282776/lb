@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {Container, Content, Form, Item, Input, Card, Button, Text, Label, CardItem} from 'native-base';
-import {View, Image} from 'react-native';
+import {View, Image, TouchableOpacity} from 'react-native';
 import {Grid, Row, Col} from 'react-native-easy-grid';
 
 export default class LoginPage extends Component {
@@ -73,12 +73,12 @@ export default class LoginPage extends Component {
                         justifyContent: 'space-between',
                         paddingTop: 15
                     }}>
-                        <View>
+                        <TouchableOpacity onPress={this.onForget}>
                             <Text style={{color: '#525252'}}>忘记密码？</Text>
-                        </View>
-                        <View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.onRegister}>
                             <Text style={{color: '#525252'}}>新用户，注册</Text>
-                        </View>
+                        </TouchableOpacity >
                     </View>
                 </View>
             </Container>
