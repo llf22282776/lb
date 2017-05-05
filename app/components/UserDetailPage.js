@@ -33,17 +33,21 @@ import {
 		    sex:'key0',
 	    };
 	}
+
 	onBack () {
 		this.props.pop();
 	};
 
 	onValueChange  (value) {
+
 		 this.setState({
 			 sex:value
 		 });
 	 };
 
+
 	changeName (value) {
+
 		this.setState({user:value})
 	};
 	render(){
@@ -76,7 +80,6 @@ import {
 								<Text>{this.state.account}</Text>
 							</Right>
 						</ListItem>
-
 					</Card>
 					<Card>
 						<ListItem>
@@ -84,6 +87,7 @@ import {
 						</ListItem>
 						<ListItem>
 							<Text>修改密码</Text>
+
 						</ListItem>
 					</Card>
 				</Content>

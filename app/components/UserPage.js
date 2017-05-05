@@ -90,23 +90,29 @@ export default class UserInfo extends Component {
             <Container>
                 <Content>
                     <Card>
+
                         <CardItem button onPress={() => { this.props.push({ key: 'userDetail' }) }}>
                             <Thumbnail style={{ width: 100, height: 100 }} source={require('../resources/1.png')} />
                             <Left style={{ flex: 3 }}>
                                 <Text>{this.state.username}{'\n'}{this.state.account}</Text>
+
                             </Left>
                             <Right style={{ flex: 1 }}>
                                 <Icon name="ios-arrow-forward" />
                             </Right>
                         </CardItem>
                     </Card>
+
                     <ListItem itemDivider style={{ backgroundColor: 'transparent' }} />
                     <ListItem icon>
+
                         <Left>
                             <Icon name="ios-mail-outline" />
                         </Left>
                         <Body>
+
                             <Text>我的消息</Text>
+
                         </Body>
                         {
                             this.renderMsg()
@@ -166,6 +172,7 @@ export default class UserInfo extends Component {
                     <ListItem button onPress={this.props.pop}>
                         <Body>
                             <Title style={{ color: 'red' }}>退出登录</Title>
+
                         </Body>
                     </ListItem>
                 </Content>

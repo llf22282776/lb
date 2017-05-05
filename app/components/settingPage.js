@@ -1,61 +1,73 @@
-import React, {Component} from 'react';
+
+/**
+ * Created by 鳌天 on 2017/3/23.
+ */
+import React,{Component} from 'react';
+
 import {
-    Button,
-    Container,
-    Thumbnail,
-    Text,
-    Title,
-    Content,
-    Header,
-    ListItem,
-    Left,
-    Body,
-    Right,
-    Card,
-    Icon,
-    CardItem
-} from 'native-base';
-import {View} from 'react-native';
-import {Grid, Row, Col} from 'react-native-easy-grid';
+	Container,
+	Header,
+	Content,
+	Button,
+	Icon,
+	ListItem,
+	Text,
+	Left
+}from 'native-base';
 
-export default class SettingPage extends Component {
-       constructor(props) {
-        super(props);
-        this.state = {
-            topicShow: false,
-            username: "test_user",
-            account: "1308-504-9985"
-        }
-
-        this.styles = {
-            rowButton: {
-                height: 100,
-                flex: 1
-            }
-        }
-    }
-
-    topicClick = () => {
-        this.setState({topicShow: !this.state.topicShow});
-    }
-
-    render() {
-        return (
-
-            <Container>
-                <Header>
-                    <Left>
-                        <Button transparent onPress={()=>{this.props.pop();}}>
-                            <Icon name="ios-arrow-back" />
-                        </Button>
-                    </Left>
-                </Header>
-                <Content>
-                   
-                </Content>
-            </Container>
-        );
-    }
-
+class SettingPage extends Component{
+	constructor(props){
+		super(props);
+	}
+	
+	onBack = () =>{
+		this.props.pop();
+	};
+	render(){
+		return(
+			<Container>
+				<Header>
+					<Left>
+						<Button onPress={this.onBack}>
+							<Icon name="ios-arrow-back"/>
+						</Button>
+					</Left>
+				</Header>
+				<Content>
+					<ListItem itemDivider>
+						<Text>基本设置</Text>
+					</ListItem>
+					<ListItem>
+						<Text>字体大小</Text>
+					</ListItem>
+					<ListItem>
+						<Text>自动切换主题</Text>
+					</ListItem>
+					
+					<ListItem itemDivider>
+						<Text>账号设置</Text>
+					</ListItem>
+					<ListItem>
+						<Text>黑名单</Text>
+					</ListItem>
+					
+					<ListItem itemDivider>
+						<Text>关于和帮助</Text>
+					</ListItem>
+					<ListItem>
+						<Text>意见与反馈</Text>
+					</ListItem>
+					<ListItem>
+						<Text>去评价</Text>
+					</ListItem>
+					<ListItem>
+						<Text>检查更新</Text>
+					</ListItem>
+				</Content>
+			</Container>
+		)
+	}
 }
+
+export default SettingPage;
 
