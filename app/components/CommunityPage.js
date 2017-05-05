@@ -56,6 +56,8 @@ var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 export default class CommunityPage extends Component {
     constructor(props) {
         super(props);
+        console.log("CommunityPage this.props");
+        console.log(this.props);
         this.toQuestionDetial = this.toQuestionDetial.bind(this);
         this.fetchCoversion = this.fetchCoversion.bind(this);
         this.mapFunction = this.mapFunction.bind(this);
@@ -69,6 +71,7 @@ export default class CommunityPage extends Component {
         this.imageRender = this.imageRender.bind(this);
         this.removeYearsAndSecond = this.removeYearsAndSecond.bind(this);
         this.supportOrNot = this.supportOrNot.bind(this);
+        this.thumbnailRender=this.thumbnailRender.bind(this);
         this.state = {
             ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1  == r2 || r1 != r2  }),
             conversionList: [],
@@ -96,7 +99,7 @@ export default class CommunityPage extends Component {
 
                 <Button block info onPress={() => { this.props.push({ key: 'addQuestion', props: { nid: this.state.nid, call_back: this.callback_ADDQUEST } }) }}>
                     <Icon name='md-create' style={{ fontSize: 20, color: '#ffffff' }} />
-                    <Text style={{ color: '#ffffff' }}>提问</Text>
+                    <Text style={{ color: '#ffffff' }}>来说点啥</Text>
                 </Button>
 
 
@@ -119,9 +122,10 @@ export default class CommunityPage extends Component {
             index: this.state.conversionList[index].index,
             callback_ADDQUEST: this.callback_ADDQUEST,
             isSupport: this.state.conversionList[index].isSupport,
+            thumbnail:this.state.conversionList[index].thumbnail,
         }
         // console.log("我在打印json")
-        // console.log(jsonprops)
+       // console.log(jsonprops)
         var jsonObj = {
             key: "detialQuestion",
             props: jsonprops
@@ -237,7 +241,9 @@ export default class CommunityPage extends Component {
             <Card >
                 <CardItem header bordered style={{ paddingBottom: 4 }}>
                     <Left>
-                        <Thumbnail source={require('../resources/user_selected.png')} />
+                        {
+                            this.thumbnailRender(rowData)
+                        }
                         <Body>
                             <Text>{rowData.titleText}</Text>
                             <Text note>{rowData.nick}</Text>
@@ -291,7 +297,18 @@ export default class CommunityPage extends Component {
             );
         }
     }
+    thumbnailRender(rowData){
+        if(rowData.thumbnail == "" || rowData.thumbnail == undefined || rowData.thumbnail == null){
 
+            return (<Thumbnail source={require('../resources/user_selected.png')} />);
+            
+        }else{
+            return (<Thumbnail source={{uri:serverAddress.SERVER_ROOT+serverAddress.IMAGE_ROOT_PEOPLE+rowData.thumbnail}} />)
+            //显示头像
+        }
+
+
+    }
     removeYearsAndSecond(rowData) {
         //Alert.alert(rowData.date)
         //var newDate = serverAddress.getDateFormat(rowData.date);

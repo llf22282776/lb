@@ -41,7 +41,15 @@ export default class SearchPage extends Component {
             <Container>
                 <Header searchBar rounded>
                     <Item>
-                        <Icon name='ios-search'/>
+                        <Icon name='ios-search' onPress={() => {
+                                   if (search.question !== '') {
+                                       submitQuestion(search.question);
+                                       this.setState({
+                                           lastSubmitText: search.question,
+                                           searched: true,
+                                       });
+                                   }
+                               }}/>
                         <Input rounded placeholder='请输入您的问题' value={search.question}
                                returnKeyType='search'
                                onChangeText={(text) => {

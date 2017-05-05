@@ -1,31 +1,42 @@
-import React, {Component} from 'react';
+
+import React, { Component } from 'react';
+import { View, Image, TextInput, Alert } from 'react-native';
 import {
-    Button,
     Container,
-    Thumbnail,
-    Text,
-    Title,
     Content,
-    ListItem,
+    Header,
+    Title,
     Left,
     Body,
     Right,
+    Thumbnail,
     Card,
+    CardItem,
+    Item,
     Icon,
-    CardItem
+    Input,
+    Button,
+    Text,
+    Form,
+    InputGroup,
+    Badge
 } from 'native-base';
-import {View} from 'react-native';
-import {Grid, Row, Col} from 'react-native-easy-grid';
+import * as serverAddress from "../util/serverAddress"
+import { Grid, Row, Col } from 'react-native-easy-grid';
 
 export default class UserInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             topicShow: false,
-            username: "test_user",
-            account: "130666"
+            username: serverAddress.USER.nick,//用户名
+            phone: serverAddress.USER.phone,//电话
+            sex: serverAddress.USER.sex,//性别
+            msgNums: 0,
         }
-
+        this.getUserMsg = this.getUserMsg.bind(this);
+        this.toMsgListPage = this.toMsgListPage.bind(this);
+        this.getUserMsg();
         this.styles = {
             rowButton: {
                 height: 100,
@@ -35,131 +46,198 @@ export default class UserInfo extends Component {
     }
 
     topicClick = () => {
-        this.setState({topicShow: !this.state.topicShow});
+        this.setState({ topicShow: !this.state.topicShow });
     }
+    async getUserMsg() {
+        //从服务器获得新消息的数量，然后渲染起来
+        var url = serverAddress.SERVER_ROOT + serverAddress.GET_PERSONAL_NEW_MSG_NUM;
+        url = url + "?";
+        url += "nid=" + serverAddress.USER.nid;
+        console.log("url:" + url);
 
+
+
+        try {
+            let response = await fetch(
+                url,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-type": "text/html;charset=UTF-8"
+                    }
+                });
+
+            let data = await response.json();
+
+
+            var msgNumsData = data.nums;//从这个字段取东西
+            this.setState({ msgNums: msgNumsData })
+
+        } catch (e) {
+            //异常
+            Alert.alert("错误", "信息数量获取失败");
+
+
+
+        }
+
+
+
+
+    }
     render() {
         return (
             <Container>
                 <Content>
                     <Card>
-                        <CardItem>
-                            <Left>
-                                <Thumbnail source={require('../resources/1.png')}/>
-                                <Body>
-                                <Text>test</Text>
-                                <Text note>1308-504-9985</Text>
-                                </Body>
+                        <CardItem button onPress={() => { this.props.push({ key: 'userDetail' }) }}>
+                            <Thumbnail style={{ width: 100, height: 100 }} source={require('../resources/1.png')} />
+                            <Left style={{ flex: 3 }}>
+                                <Text>{this.state.username}{'\n'}{this.state.account}</Text>
                             </Left>
-                            <Right>
-                                <Icon name="ios-arrow-forward"/>
+                            <Right style={{ flex: 1 }}>
+                                <Icon name="ios-arrow-forward" />
                             </Right>
                         </CardItem>
-                        <CardItem>
-                            <Grid>
-                                <Row>
-                                    <Col>
-                                        <View style={{alignItems: 'center'}}>
-                                            <Text note>我的回答</Text>
-                                            <Text note>0</Text>
-                                        </View>
-                                    </Col>
-                                    <Col>
-                                        <View style={{alignItems: 'center'}}>
-                                            <Text note>我的提问</Text>
-                                            <Text note>0</Text>
-                                        </View>
-                                    </Col>
-                                    <Col>
-                                        <View style={{alignItems: 'center'}}>
-                                            <Text note>获得的赞同</Text>
-                                            <Text note>0</Text>
-                                        </View>
-                                    </Col>
-                                </Row>
-                            </Grid>
-                        </CardItem>
                     </Card>
-                    <ListItem itemDivider style={{backgroundColor: 'transparent'}}/>
+                    <ListItem itemDivider style={{ backgroundColor: 'transparent' }} />
                     <ListItem icon>
                         <Left>
-                            <Icon name="ios-mail-outline"/>
+                            <Icon name="ios-mail-outline" />
                         </Left>
                         <Body>
-                        <Text>我的消息</Text>
+                            <Text>我的消息</Text>
                         </Body>
-                        <Right>
-                            <Icon name="ios-arrow-forward"/>
-                        </Right>
+                        {
+                            this.renderMsg()
+
+                        }
+
                     </ListItem>
-                    <ListItem itemDivider style={{backgroundColor: 'transparent'}}/>
+                    <ListItem itemDivider style={{ backgroundColor: 'transparent' }} />
+
                     <ListItem icon>
                         <Left>
-                            <Icon name="ios-settings-outline"/>
+                            <Icon name="ios-car" />
                         </Left>
                         <Body>
-                        <Text>设置</Text>
-                        </Body>
-                        <Right>
-                            <Icon name="ios-arrow-forward"/>
-                        </Right>
-                    </ListItem>
-                    <ListItem icon>
-                        <Left>
-                            <Icon name="ios-car-outline"/>
-                        </Left>
-                        <Body>
-                        <Text>我的车辆</Text>
+                            <Text>我的车辆</Text>
                         </Body>
                         <Right>
                             <Text>暂未绑定</Text>
-                            <Icon name="ios-arrow-forward"/>
+                            <Icon name="ios-arrow-forward" />
+                        </Right>
+                    </ListItem>
+                    <ListItem icon button onPress={() => { this.props.push({ key: 'setting' }) }}>
+                        <Left>
+                            <Icon name="ios-settings-outline" />
+                        </Left>
+                        <Body>
+                            <Text>设置</Text>
+                        </Body>
+                        <Right>
+                            <Icon name="ios-arrow-forward" />
+                        </Right>
+                    </ListItem>
+                    <ListItem itemDivider style={{ backgroundColor: 'transparent' }} />
+                    <ListItem icon>
+                        <Left>
+                            <Icon name="ios-information-circle-outline" />
+                        </Left>
+                        <Body>
+                            <Text>关于</Text>
+                        </Body>
+                        <Right>
+                            <Icon name="ios-arrow-forward" />
                         </Right>
                     </ListItem>
                     <ListItem icon>
                         <Left>
-                            <Icon name="ios-chatbubbles-outline"/>
+                            <Icon name="ios-share-outline" />
                         </Left>
                         <Body>
-                        <Text>话题管理</Text>
+                            <Text>分享</Text>
                         </Body>
                         <Right>
-                            <Icon name="ios-arrow-forward"/>
+                            <Icon name="ios-arrow-forward" />
                         </Right>
                     </ListItem>
-                    <ListItem itemDivider style={{backgroundColor: 'transparent'}}/>
-                    <ListItem icon>
-                        <Left>
-                            <Icon name="ios-information-circle-outline"/>
-                        </Left>
+                    <ListItem itemDivider style={{ backgroundColor: 'transparent' }} />
+                    <ListItem button onPress={this.props.pop}>
                         <Body>
-                        <Text>关于</Text>
-                        </Body>
-                        <Right>
-                            <Icon name="ios-arrow-forward"/>
-                        </Right>
-                    </ListItem>
-                    <ListItem icon>
-                        <Left>
-                            <Icon name="ios-share-outline"/>
-                        </Left>
-                        <Body>
-                        <Text>分享</Text>
-                        </Body>
-                        <Right>
-                            <Icon name="ios-arrow-forward"/>
-                        </Right>
-                    </ListItem>
-                    <ListItem itemDivider style={{backgroundColor: 'transparent'}}/>
-                    <ListItem>
-                        <Body>
-                        <Title style={{color: 'red'}}>退出登录</Title>
+                            <Title style={{ color: 'red' }}>退出登录</Title>
                         </Body>
                     </ListItem>
                 </Content>
             </Container>
         );
     }
+    renderMsg() {
+        //显示消息数
+        if (this.state.msgNums >= 1) {
+            return (
+                <Right>
+                    <Button transparent onPress={}>
+                        <Icon name="ios-arrow-forward" />
+                    </Button>
+                </Right>
+            )
+        }
+        else {
+            <Right>
+                <Badge>
+                    <Text>{this.state.msgNums}</Text>
+                </Badge>
+                <Button transparent onPress={} >
+                    <Icon name="ios-arrow-forward" />
+                </Button>
+            </Right>
+
+        }
+
+
+    }
+    toMsgListPage() {
+        //到消息列表页
+        //从服务器获得新消息的数量，然后渲染起来
+        var url = serverAddress.SERVER_ROOT + serverAddress.GET_PERSONAL_NEW_MSG;
+        url = url + "?";
+        url += "nid=" + serverAddress.USER.nid;
+        try {
+            let response = await fetch(
+                url,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-type": "text/html;charset=UTF-8"
+                    }
+                });
+
+            var data = await response.json();
+            data.call_back=this.callBack_clearNewMsg;
+
+            var jsonObj = {
+                key: "newMsgListPage",
+                props: data
+            };
+            this.props.push(jsonObj);//进入列表页面
+
+        } catch (e) {
+            //异常
+            Alert.alert("错误", "新消息列表拉取失败");
+
+
+
+        }
+
+
+    }
+    callBack_clearNewMsg(){
+       this. getUserMsg();//拉取一下新消息
+
+
+    }
+
 }
 
 /*

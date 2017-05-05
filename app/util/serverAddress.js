@@ -2,6 +2,8 @@ import {Alert } from 'react-native'
 
 export const SERVER_ROOT="http://192.168.99.2:8080/"
 export const GET_COVERSIONLIST="api/coversion/getCoversionList"
+export const GET_COVERSIONLIST_BY_ID="api/coversion/getCoversionByCid"
+
 export const GET_COMMENTLIST="api/comment/getCommentList"
 export const GET_COMMENTLIST_JSON="api/comment/getCommentList_json"
 export const INSERT_COVERSION="api/coversion/insertCoversion"
@@ -9,7 +11,26 @@ export const INSERT_COMMENT="api/comment/insertComment"
 export const SEARCH_COVERSIONLIST="api/coversion/searchCoversionList";
 export const SUPPORT_COVERSION="api/comment/upDateSupportNums"
 export const IMAGE_ROOT="/static/images/";
+export const IMAGE_ROOT_PEOPLE="/static/images/thumbnail/";
 export const TEST="api/test";
+
+export const GET_PERSONAL_MSG= "api/personal/getPersonalMsg";
+export const GET_PERSONAL_NEW_MSG= "api/personal/getMsgNew";
+export const GET_PERSONAL_NEW_MSG_NUM= "api/personal/getMsgNewNums";
+export const SET_PERSONAL_NEW_MSG_VIEWED= "api/personal/setMsgViewed";//参数json
+
+export const USER={
+    nid:1,
+    sex:"男",
+    nick:"test",
+    passPort:"asd123",
+    pwd:"asd123",
+    phone:"17888821289",
+    thumbnail:"../resources/1.png"
+
+
+}
+
 export const STATE={
     STATE_SUPPORT:2,
     STATE_UNSUPPORT:1
@@ -19,7 +40,9 @@ export const STATE={
 export const nid=1;
 export const removeYearsAndSecond = (newDate) =>{
          //var newDate = rowData.date;
- 
+          console.log("newDate");
+          console.log(newDate);
+         
         newDate=getDateFormat(newDate);
        
       
@@ -48,7 +71,7 @@ export const removeYearsAndSecond = (newDate) =>{
  
     
        
-      
+        newDate=newDate+"";
         var stringList=newDate.split("-");//第一个是年,第二个是月
      
         var mouth=stringList[1];

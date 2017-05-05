@@ -30,6 +30,7 @@ export default class AnswerToQuestionPage extends Component {
         this.changeTextEvent = this.changeTextEvent.bind(this);
 
         this.getNowFormatDate = this.getNowFormatDate.bind(this);
+        this.thumbnailRender = this.thumbnailRender.bind(this);
         this.state = {
             contentText: ""
 
@@ -87,6 +88,18 @@ export default class AnswerToQuestionPage extends Component {
     returnLastOne() {
         this.props.pop();//返回上个界面
     }
+    thumbnailRender(rowData) {
+        if (rowData.thumbnail == "" || rowData.thumbnail == undefined || rowData.thumbnail == null) {
+
+            return (<Thumbnail source={require('../resources/user_selected.png')} />);
+
+        } else {
+            return (<Thumbnail source={{ uri: serverAddress.SERVER_ROOT + serverAddress.IMAGE_ROOT_PEOPLE + rowData.thumbnail }} />)
+            //显示头像
+        }
+
+
+    }
     async commitOneQuestion() {
         var url = serverAddress.SERVER_ROOT + serverAddress.INSERT_COMMENT + "?" + "nid=" + serverAddress.nid + "&" + "cid=" + this.props.cid + "&" + "content=" + this.state.contentText + "&" + "date=" + this.getNowFormatDate();
         try {
@@ -105,12 +118,12 @@ export default class AnswerToQuestionPage extends Component {
 
             var data = data.commentList;//从这个字段取东西
             this.call_back();
-     
+
             this.returnLastOne();//返回界面
 
         } catch (e) {
             //异常
-            Alert.alert(e);
+            Alert.alert("错误：");
         }
 
 
@@ -188,5 +201,5 @@ export default class AnswerToQuestionPage extends Component {
         console.log(CurrentDate);
         return CurrentDate;
     }
-   
+
 }

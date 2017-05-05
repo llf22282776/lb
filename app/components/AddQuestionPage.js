@@ -117,11 +117,7 @@ export default class AddQuestionPage extends Component {
         url += "title=" + this.state.title + "&";
         url += "date=" + this.getNowFormatDate();
         console.log("url:" + url);
-        // var formdata = new FormData();
-        // formdata.append("nid", this.state.nid);
-        // formdata.append("content", this.state.content);
-        // formdata.append("title", this.state.title);
-        // formdata.append("date", new Date().formdata("yyyy-mm-dd"));
+
 
 
         try {
@@ -216,8 +212,7 @@ export default class AddQuestionPage extends Component {
         else {
             CurrentDate += "0" + second;
         }
-        Alert.alert("CurrentDate",CurrentDate);
-        console.log(CurrentDate);
+     
         return CurrentDate;
     }
 

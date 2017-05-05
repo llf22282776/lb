@@ -57,9 +57,7 @@ export default class HomePage extends Component {
                           pointerEvents={selectedTab === 'my' ? 'auto' : 'none'}
                           removeClippedSubviews={!(selectedTab === 'my')}>
                         <Header>
-                            <Body>
-                            <Title>{headerText[selectedTab]}</Title>
-                            </Body>
+                            
                         </Header>
                         <UserInfo push={this.props.push} pop={this.props.pop}/>
                     </View>
