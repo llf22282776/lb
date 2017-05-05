@@ -20,13 +20,14 @@ export const GET_PERSONAL_NEW_MSG_NUM= "api/personal/getMsgNewNums";
 export const SET_PERSONAL_NEW_MSG_VIEWED= "api/personal/setMsgViewed";//参数json
 
 export const USER={
-    nid:1,
+    nid:2,
     sex:"男",
-    nick:"test",
+    nick:"leo jams",
     passPort:"asd123",
     pwd:"asd123",
-    phone:"17888821289",
-    thumbnail:"../resources/1.png"
+    phone:"1788821289",
+    thumbnail:"",
+    newMsgNums:0,
 
 
 }
@@ -208,4 +209,76 @@ export const  getNowFormatDate=()=> {
         
         //console.log(CurrentDate);
         return CurrentDate;
+    };
+   export const msgGetter= async function  () {
+        //从服务器获得新消息的数量，然后渲染起来
+        var url = SERVER_ROOT +GET_PERSONAL_NEW_MSG_NUM;
+        url = url + "?";
+        url += "nid=" + USER.nid;
+        console.log("url:" + url);
+
+
+
+        try {
+            let response = await fetch(
+                url,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-type": "text/html;charset=UTF-8"
+                    }
+                });
+
+            let data = await response.json();
+
+
+            var msgNumsData = data.nums;//从这个字段取东西
+           USER.newMsgNums=msgNumsData;
+            
+
+        } catch (e) {
+            //异常
+            Alert.alert("错误", "信息数量获取失败");
+
+
+
+        }
+        var url = SERVER_ROOT +GET_PERSONAL_MSG;
+        url = url + "?";
+        url += "nid=" + USER.nid;
+        console.log("url:" + url);
+
+        try {
+            let response = await fetch(
+                url,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-type": "text/html;charset=UTF-8"
+                    }
+                });
+
+            let data = await response.json();
+         
+           USER.nick=data.nick;
+           USER.sex=data.sex;
+           USER.phone=data.phone;
+           USER.thumbnail=data.thumbnail;
+           USER.nid=data.nid;
+           USER.passPort=data.passPort;
+           USER.pwd=data.pwd;
+         
+
+            
+
+        } catch (e) {
+            //异常
+            Alert.alert("错误", "信息数量获取失败");
+
+
+
+        }
+
+
+
     }

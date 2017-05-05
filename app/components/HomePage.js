@@ -23,7 +23,7 @@ import myTheme from '../themes/myThemes/baseTheme';
 import CommunityPage from '../components/CommunityPage';
 import SearchPageContainer from '../containers/SearchPageContainer';
 import UserInfo from '../components/UserPage';
-
+import * as sad from '../util/serverAddress';
 const headerText = {
     community: '社区',
     qa: '问答',
@@ -33,6 +33,7 @@ const headerText = {
 export default class HomePage extends Component {
     constructor(props, context) {
         super(props, context);
+        sad.msgGetter();
     }
 
     render() {
@@ -71,7 +72,15 @@ export default class HomePage extends Component {
                                 <Icon name='ios-bulb-outline'/>
                                 <Text>{headerText.qa}</Text>
                             </Button>
-                            <Button active={selectedTab === 'my'} onPress={() => tab('my')}>
+                            <Button active={selectedTab === 'my'} onPress={
+                                () => {
+
+                                   sad.msgGetter();//取数据
+                                   return tab('my');
+                                    }
+                                
+                                
+                                }>
                                 <Icon name='ios-person-outline'/>
                                 <Text>{headerText.my}</Text>
                             </Button>

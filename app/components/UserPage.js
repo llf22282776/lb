@@ -19,7 +19,8 @@ import {
     Text,
     Form,
     InputGroup,
-    Badge
+    Badge,
+    ListItem
 } from 'native-base';
 import * as serverAddress from "../util/serverAddress"
 import { Grid, Row, Col } from 'react-native-easy-grid';
@@ -27,6 +28,7 @@ import { Grid, Row, Col } from 'react-native-easy-grid';
 export default class UserInfo extends Component {
     constructor(props) {
         super(props);
+        console.warn(serverAddress.USER.nick)
         this.state = {
             topicShow: false,
             username: serverAddress.USER.nick,//用户名
@@ -36,6 +38,8 @@ export default class UserInfo extends Component {
         }
         this.getUserMsg = this.getUserMsg.bind(this);
         this.toMsgListPage = this.toMsgListPage.bind(this);
+        this.callBack_clearNewMsg = this.callBack_clearNewMsg.bind(this);
+        this.renderThumbnail = this.renderThumbnail.bind(this);
         this.getUserMsg();
         this.styles = {
             rowButton: {
@@ -71,6 +75,7 @@ export default class UserInfo extends Component {
 
 
             var msgNumsData = data.nums;//从这个字段取东西
+
             this.setState({ msgNums: msgNumsData })
 
         } catch (e) {
@@ -92,9 +97,14 @@ export default class UserInfo extends Component {
                     <Card>
 
                         <CardItem button onPress={() => { this.props.push({ key: 'userDetail' }) }}>
-                            <Thumbnail style={{ width: 100, height: 100 }} source={require('../resources/1.png')} />
+                            {
+
+                                this.renderThumbnail()
+
+                            }
+
                             <Left style={{ flex: 3 }}>
-                                <Text>{this.state.username}{'\n'}{this.state.account}</Text>
+                                <Text>{this.state.username}</Text>
 
                             </Left>
                             <Right style={{ flex: 1 }}>
@@ -179,32 +189,57 @@ export default class UserInfo extends Component {
             </Container>
         );
     }
+    renderThumbnail() {
+
+        if (serverAddress.USER.thumbnail == null || serverAddress.USER.thumbnail == undefined || serverAddress.USER.thumbnail == "")
+            return <Thumbnail style={{ width: 100, height: 100 }} source={require('../resources/1.png')} />
+        else
+            return <Thumbnail style={{ width: 100, height: 100 }} source={{ uri: serverAddress.SERVER_ROOT + serverAddress.IMAGE_ROOT_PEOPLE + serverAddress.USER.thumbnail }} />
+
+    }
     renderMsg() {
         //显示消息数
-        if (this.state.msgNums >= 1) {
+        if (this.state.msgNums > 0) {
+            //消息数
             return (
                 <Right>
-                    <Button transparent onPress={}>
+                    <Badge>
+                        <Text>{this.state.msgNums}</Text>
+                    </Badge>
+                    <Button transparent onPress={this.toMsgListPage} >
+                        <Icon name="ios-arrow-forward" />
+                    </Button>
+                </Right>);
+
+        } else if (serverAddress.USER.msgNums > 0) {
+            return (
+                <Right>
+                    <Badge>
+                        <Text>{serverAddress.USER.msgNums}</Text>
+                    </Badge>
+                    <Button transparent onPress={this.toMsgListPage} >
+                        <Icon name="ios-arrow-forward" />
+                    </Button>
+                </Right>);
+
+        } else {
+
+            return (
+                <Right>
+                    <Button transparent onPress={this.toMsgListPage}>
                         <Icon name="ios-arrow-forward" />
                     </Button>
                 </Right>
-            )
-        }
-        else {
-            <Right>
-                <Badge>
-                    <Text>{this.state.msgNums}</Text>
-                </Badge>
-                <Button transparent onPress={} >
-                    <Icon name="ios-arrow-forward" />
-                </Button>
-            </Right>
+            );
 
         }
+
+
+
 
 
     }
-    toMsgListPage() {
+    async  toMsgListPage() {
         //到消息列表页
         //从服务器获得新消息的数量，然后渲染起来
         var url = serverAddress.SERVER_ROOT + serverAddress.GET_PERSONAL_NEW_MSG;
@@ -221,7 +256,7 @@ export default class UserInfo extends Component {
                 });
 
             var data = await response.json();
-            data.call_back=this.callBack_clearNewMsg;
+            data.call_back = this.callBack_clearNewMsg;
 
             var jsonObj = {
                 key: "newMsgListPage",
@@ -239,78 +274,10 @@ export default class UserInfo extends Component {
 
 
     }
-    callBack_clearNewMsg(){
-       this. getUserMsg();//拉取一下新消息
+    callBack_clearNewMsg() {
+        this.setState({ msgNums: 0 });//拉取一下新消息
 
 
     }
 
 }
-
-/*
- <Card>
- <CardItem>
- <Card>
- <CardItem >
- <Thumbnail style={{marginRight: 20}} size={120}
- source={require('../resources/1.png')}/>
- <Card>
- <CardItem button>
- <Text>{this.state.username}</Text>
- <Right>
- <Icon name="ios-arrow-forward" style={{marginRight: 0}}/>
- </Right>
- </CardItem>
- <CardItem button>
- <Text>路宝账户：{this.state.account}</Text>
- </CardItem>
- </Card>
- </CardItem>
- </Card>
- </CardItem>
- <CardItem itemDvider/>
- <CardItem button>
- <Icon name="ios-car"/>
- <Text>绑定车辆</Text>
- <Icon name="ios-arrow-forward"/>
- </CardItem>
- <CardItem itemDvider/>
- {() => {
- if (this.state.topicShow) {
- return (
- <CardItem button onClik={this.topicClick}>
- <Icon name="ios-eye"/>
- <Text>关注话题</Text>
- <Icon name="ios-arrow-down"/>
- </CardItem>
- )
- }
- else {
- return (
- <Content>
- <CardItem button>
- <Text>#吐槽#</Text>
- </CardItem>
- <CardItem button>
- <Text>#汽车保养#</Text>
- </CardItem>
- <CardItem button>
- <Text>#追责#</Text>
- </CardItem>
- </Content>
- )
- }
- }}
- <CardItem button>
- <Icon name="ios-settings"/>
- <Text>设置</Text>
- <Icon name="ios-arrow-forward"/>
- </CardItem>
- <CardItem button>
- <Icon name="ios-notifications"/>
- <Text>通知</Text>
- <Icon name="ios-arrow-forward"/>
- </CardItem>
- </Card>
-
- */

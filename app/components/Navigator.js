@@ -15,14 +15,16 @@ import UserInfo from './UserPage';
 import DetialQuestionPage from '../components/DetialQuestionPage';
 import AnswerToQuestionPage from '../components/AnswerToQuestionPage';
 import SettingPage from './settingPage';
-import NewMsgListPage from './NewMsgListPage'
+import NewMsgListPage from './NewMsgListPage';
+import WelcomePage from './WelcomePage';
 const { CardStack } = NavigationExperimental;
-
+var i=0;
 export default class Navigator extends Component {
     static propTypes = {
         push: PropTypes.func.isRequired,
         pop: PropTypes.func.isRequired,
         navigator: PropTypes.objectOf(PropTypes.any)
+        
     };
 
     constructor(props, context) {
@@ -36,12 +38,18 @@ export default class Navigator extends Component {
                 onNavigateBack={this.props.pop}
                 navigationState={this.props.navigator}
                 renderScene={this.renderScene}
+                
             />
         )
     }
 
     renderScene(sceneProps) {
         const route = sceneProps.scene.route;
+        if( i == 0){ 
+            route.key='WelcomePage';
+            i++;
+        
+        }
         console.log(route);
         switch (route.key) {
             case 'home':
@@ -135,6 +143,14 @@ export default class Navigator extends Component {
                 return (
                     <NewMsgListPage
                         {...route.props}
+                        push={this.props.push}
+                        pop={this.props.pop}
+                    />
+                )
+            case 'WelcomePage':
+                return (
+                    <WelcomePage 
+                     {...route.props}
                         push={this.props.push}
                         pop={this.props.pop}
                     />

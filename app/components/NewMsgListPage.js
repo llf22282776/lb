@@ -26,21 +26,24 @@ import {
     Text
 } from 'native-base';
 import * as serverAddress from "../util/serverAddress"
-var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
+var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+var cidsTemp = [];
+var nidsTemp = [];
 export default class NewMsgListPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             newMsgList: this.props.commentList,//传回来的数据
-            cids:[],
-            nids:[]
+            cids: [],
+            nids: []
         }
-        this.toLast=this.toLast.bind(this);
-        this.setMsgViewed=this.setMsgViewed.bind(this);
-        this.getCidListAndCidList=this.getCidListAndCidList.bind(this);
-        this.renderCommits=this.renderCommits.bind(this);
-        this.thumbnailRender=this.thumbnailRender.bind(this);
-        this.toDetail=this.toDetail.bind(this);
+        this.toLast = this.toLast.bind(this);
+        this.setMsgViewed = this.setMsgViewed.bind(this);
+        this.getCidListAndCidList = this.getCidListAndCidList.bind(this);
+        this.renderCommits = this.renderCommits.bind(this);
+        this.thumbnailRender = this.thumbnailRender.bind(this);
+        this.toDetail = this.toDetail.bind(this);
+
     }
     render() {
         return (
@@ -63,9 +66,10 @@ export default class NewMsgListPage extends Component {
 
 
     }
-    
-    toLast(){
+
+    toLast() {
         //先去清空一下
+        this.getCidListAndCidList();
         this.setMsgViewed();
         //调用回调函数
         this.props.call_back();
@@ -73,10 +77,11 @@ export default class NewMsgListPage extends Component {
         this.props.pop();//返回
 
     }
-   async setMsgViewed(){
+    async setMsgViewed() {
         //向服务器发送请求更新数据库
         var url = serverAddress.SERVER_ROOT + serverAddress.SET_PERSONAL_NEW_MSG_VIEWED;
         try {
+           
             let response = await fetch(
                 url,
                 {
@@ -86,8 +91,8 @@ export default class NewMsgListPage extends Component {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        cids: this.state.cids,
-                        nids: this.state.nids
+                        cids: cidsTemp,
+                        nids: nidsTemp
                     })
                 });
 
@@ -96,28 +101,28 @@ export default class NewMsgListPage extends Component {
 
         } catch (e) {
             //异常
-            Alert.alert("错误","消息清空失败");
+            Alert.alert("错误", "消息清空失败");
         }
 
 
 
     }
-    getCidListAndCidList(){
-        var cidsTemp=[];
-        var nidsTemp=[];
-        for( var i = 0;i<this.state.newMsgList.length;i++    ){
-             cidsTemp[i]=this.state.newMsgList[i].cid;
-             nidsTemp[i]=this.state.newMsgList[i].nid;
+    getCidListAndCidList() {
+
+        for (var i = 0; i < this.state.newMsgList.length; i++) {
+            cidsTemp[i] = this.state.newMsgList[i].cid;
+            nidsTemp[i] = this.state.newMsgList[i].nid;
 
 
         }
-        this.setState({cids:cidsTemp,nids:nidsTemp});//取得顺序数组
-
-
-
-    }
 
    
+
+
+
+    }
+
+
     renderCommits(data) {
         //Alert.alert(data.date);
         var date = serverAddress.removeYearsAndSecond_1(data.date);
@@ -129,17 +134,19 @@ export default class NewMsgListPage extends Component {
                     this.thumbnailRender(data)
                 }
                 <Body>
+                    <Text note>{date}</Text>
                     <Text >{data.nick}</Text>
                     <Text note>{data.content}</Text>
+
                 </Body>
                 <Right>
-                    <Button transparent onPress={ ()=>{ this.toDetail(data); } }>
-                        <Text note>{date}</Text>
+                    <Button transparent iconRight onPress={() => { this.toDetail(data); }}>
+                        <Text note>{data.title}</Text>
                         <Icon name="ios-arrow-forward" />
                     </Button>
-                    
+
                 </Right>
-                
+
 
             </ListItem>
 
@@ -149,7 +156,7 @@ export default class NewMsgListPage extends Component {
         );
 
     }
-      thumbnailRender(rowData) {
+    thumbnailRender(rowData) {
         if (rowData.thumbnail == "" || rowData.thumbnail == undefined || rowData.thumbnail == null) {
 
             return (<Thumbnail source={require('../resources/user_selected.png')} />);
@@ -161,13 +168,39 @@ export default class NewMsgListPage extends Component {
 
 
     }
-    toDetail(data){
-       //进入帖子详情
-       var jsonObj = {
-            key: "detialQuestion",
-            props: jsonprops
-        };
-        this.props.push(jsonObj);
+    async toDetail(data) {
+        //进入帖子详情,请求帖子
+        var url = serverAddress.SERVER_ROOT + serverAddress.GET_COVERSIONLIST_BY_ID;
+        url = url + "?";
+        url += "nid=" + serverAddress.USER.nid + "&";
+        url += "cid=" + data.cid;
+        try {
+            let response = await fetch(
+                url,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-type": "text/html;charset=UTF-8"
+                    }
+                });
+
+            var data = await response.json();
+
+            var jsonObj = {
+                key: "detialQuestion",
+                props: data
+            };
+            this.props.push(jsonObj);
+
+        } catch (e) {
+            //异常
+            Alert.alert("错误", "新消息列表拉取失败");
+
+
+
+        }
+
+
 
 
 

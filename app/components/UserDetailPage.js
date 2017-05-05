@@ -18,7 +18,7 @@ import {
 	Icon,
 	Picker,
 } from 'native-base';
-
+import * as sad from '../util/serverAddress'
  class  UserDetailPage extends Component{
 	// 构造
 	constructor(props) {
@@ -27,10 +27,11 @@ import {
 		this.onBack=this.onBack.bind(this);
 		this.onValueChange=this.onValueChange.bind(this);
 		this.changeName=this.changeName.bind(this);
+		this.renderThumbnail=this.renderThumbnail.bind(this);
 	    this.state = {
-		    user:"名字",
-		    account:"1332165846",
-		    sex:'key0',
+		    user:sad.USER.nick,
+		    phone:sad.USER.phone,
+		    sex:sad.USER.sex,
 	    };
 	}
 
@@ -50,6 +51,14 @@ import {
 
 		this.setState({user:value})
 	};
+	renderThumbnail() {
+
+        if (sad.USER.thumbnail == null || sad.USER.thumbnail == undefined || sad.USER.thumbnail == "")
+            return <Right><Thumbnail style={{ width: 100, height: 100 }} source={require('../resources/1.png')} /></Right>
+        else
+            return <Right><Thumbnail style={{ width: 100, height: 100 }} source={{ uri: sad.SERVER_ROOT + sad.IMAGE_ROOT_PEOPLE + sad.USER.thumbnail }} /></Right>
+
+    }
 	render(){
 		return(
 			<Container>
@@ -64,9 +73,10 @@ import {
 					<Card>
 						<CardItem>
 							<Text>头像</Text>
-							<Right>
-								<Thumbnail style={{marginRight:20}} size={120} source={require('../resources/1.png')}/>
-							</Right>
+						{
+
+							this.renderThumbnail()
+						}
 						</CardItem>
 						<ListItem button >
 							<Text>昵称</Text>
@@ -77,7 +87,7 @@ import {
 						<ListItem>
 							<Text>路宝账号</Text>
 							<Right>
-								<Text>{this.state.account}</Text>
+								<Text>{this.state.phone}</Text>
 							</Right>
 						</ListItem>
 					</Card>
