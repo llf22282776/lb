@@ -20,7 +20,7 @@ export const GET_PERSONAL_NEW_MSG_NUM= "api/personal/getMsgNewNums";
 export const SET_PERSONAL_NEW_MSG_VIEWED= "api/personal/setMsgViewed";//参数json
 
 export const USER={
-    nid:2,
+    nid:1,
     sex:"男",
     nick:"leo jams",
     passPort:"asd123",
@@ -38,7 +38,7 @@ export const STATE={
 }
 
 
-export const nid=1;
+export var nid=1;
 export const removeYearsAndSecond = (newDate) =>{
          //var newDate = rowData.date;
           console.log("newDate");
@@ -267,7 +267,7 @@ export const  getNowFormatDate=()=> {
            USER.nid=data.nid;
            USER.passPort=data.passPort;
            USER.pwd=data.pwd;
-         
+           nid=USER.nid
 
             
 

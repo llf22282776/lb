@@ -77,11 +77,11 @@ export default class CommunityPage extends Component {
             conversionList: [],
             indexCount: 0,
             keyword: "",
-            nid: serverAddress.nid,
+            nid: serverAddress.USER.nid,
             refresh: false,
 
         }
-        this.fetchCoversion(serverAddress.nid);
+        this.fetchCoversion(serverAddress.USER.nid);
     }
     render() {
         //return之前，先获取帖子，获取随机
@@ -143,7 +143,7 @@ export default class CommunityPage extends Component {
     }
     callback_ADDQUEST1() {
 
-        this.fetchCoversion(serverAddress.nid);
+        this.fetchCoversion(serverAddress.USER.nid);
 
 
 

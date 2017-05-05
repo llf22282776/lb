@@ -45,7 +45,7 @@ export default class AddQuestionPage extends Component {
         this.state = {
             content: "",
             title: "",
-            nid: serverAddress.nid
+            nid: serverAddress.USER.nid
         }
 
     }

@@ -28,7 +28,7 @@ import { Grid, Row, Col } from 'react-native-easy-grid';
 export default class UserInfo extends Component {
     constructor(props) {
         super(props);
-        console.warn(serverAddress.USER.nick)
+   
         this.state = {
             topicShow: false,
             username: serverAddress.USER.nick,//用户名

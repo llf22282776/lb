@@ -101,7 +101,7 @@ export default class AnswerToQuestionPage extends Component {
 
     }
     async commitOneQuestion() {
-        var url = serverAddress.SERVER_ROOT + serverAddress.INSERT_COMMENT + "?" + "nid=" + serverAddress.nid + "&" + "cid=" + this.props.cid + "&" + "content=" + this.state.contentText + "&" + "date=" + this.getNowFormatDate();
+        var url = serverAddress.SERVER_ROOT + serverAddress.INSERT_COMMENT + "?" + "nid=" + serverAddress.USER.nid + "&" + "cid=" + this.props.cid + "&" + "content=" + this.state.contentText + "&" + "date=" + this.getNowFormatDate();
         try {
             let response = await fetch(
                 url,
@@ -117,13 +117,14 @@ export default class AnswerToQuestionPage extends Component {
             console.log(data);
 
             var data = data.commentList;//从这个字段取东西
-            this.call_back();
+            this.props.call_back();
 
             this.returnLastOne();//返回界面
 
         } catch (e) {
             //异常
-            Alert.alert("错误：");
+            console.warn(e);
+            Alert.alert("错误：","评论失败");
         }
 
 
