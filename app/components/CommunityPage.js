@@ -72,6 +72,7 @@ export default class CommunityPage extends Component {
         this.removeYearsAndSecond = this.removeYearsAndSecond.bind(this);
         this.supportOrNot = this.supportOrNot.bind(this);
         this.thumbnailRender=this.thumbnailRender.bind(this);
+        this.deleteRender=this.deleteRender.bind(this);
         this.state = {
             ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1  == r2 || r1 != r2  }),
             conversionList: [],
@@ -166,7 +167,21 @@ export default class CommunityPage extends Component {
 
 
     }
+    deleteRender(data){
+        if(data.nid == serverAddress.USER.nid){
+            return (
+                <Right>
+                    <Button transparent >
+                        <Icon  name="md-close-circle" style={{color:"#ee4400"}} />
+                    </Button>
+                </Right>
+            )
 
+        }else{
+            return null;
+        }
+
+    }
     async fetchCoversion(index) {
         //从服务器获得帖子,放到state里面去 this.state.conversionList
         var url = serverAddress.SERVER_ROOT + serverAddress.GET_COVERSIONLIST + "?" + "nid=" + index;
@@ -248,6 +263,9 @@ export default class CommunityPage extends Component {
                             <Text>{rowData.titleText}</Text>
                             <Text note>{rowData.nick}</Text>
                         </Body>
+                        {
+                            this.deleteRender(rowData)
+                        }
                     </Left>
                 </CardItem>
                 {

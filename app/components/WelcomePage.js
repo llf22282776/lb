@@ -5,7 +5,8 @@ import {
     Image,
     TextInput,
     Text,
-    Alert } from 'react-native';
+    Alert
+} from 'react-native';
 import {
     Container,
     Content,
@@ -29,33 +30,43 @@ import {
 } from 'native-base';
 import * as serverAddress from "../util/serverAddress"
 import { Grid, Row, Col } from 'react-native-easy-grid';
-var i=0;
+var i = 0;
 export default class WelcomePage extends Component {
     constructor(props) {
         super(props);
         setTimeout(
             () => {
-                if(i == 1)return ;
+                if (i == 1) return;
                 i++;
-                this.props.push({ key: 'home' });  
+                this.props.push({ key: 'home' });
             }, 500
         );
 
     }
     render() {
-       return (
-         <View style={styles.container}>
-            <Text style={styles.welcome}>
-                Road Baby,easy your way!
+        return (
+            <View style={styles.container}>
+                <Text style={styles.welcome}>
+                    RoadBaby
+            </Text>
+                <Text style={{
+
+                    fontStyle:'normal',
+                    fontSize: 27,
+                    textAlign: 'center',
+                    marginTop: 5,
+                }}>
+                    Easy your way
             </Text>
 
-            <Text style={styles.instructions}>
-                版权所有，侵权必究
+
+                <Text style={styles.instructions}>
+                    DIG团队倾情奉献
         </Text>
-        </View>
+            </View>
 
 
-       );
+        );
 
 
     }
@@ -71,15 +82,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
+
     },
     welcome: {
+        fontStyle:'normal',
         fontSize: 27,
         textAlign: 'center',
-        marginBottom: 100,
+        marginTop: 150,
+  
+
     },
     instructions: {
         textAlign: 'center',
-        color: '#333333',
-        marginTop: 200,
+        fontSize: 12,
+        color: '#777777',
+        marginTop: 350,
     },
+    welcome1: {
+        fontSize: 27,
+        textAlign: 'center',
+        marginTop: 5,
+        fontFamily: 'asfddfsf',
+        
+
+
+
+    }
 });
