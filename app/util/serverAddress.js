@@ -18,7 +18,7 @@ export const GET_PERSONAL_MSG= "api/personal/getPersonalMsg";
 export const GET_PERSONAL_NEW_MSG= "api/personal/getMsgNew";
 export const GET_PERSONAL_NEW_MSG_NUM= "api/personal/getMsgNewNums";
 export const SET_PERSONAL_NEW_MSG_VIEWED= "api/personal/setMsgViewed";//参数json
-
+export var i=0;
 export const USER={
     nid:1,
     sex:"男",

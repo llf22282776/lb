@@ -136,7 +136,10 @@ export default class SearchPage extends Component {
                             </View>
                         );
                     } else {
+                         console.log("-s-earch--");
+                        console.log(search);
                         return (
+                            
                             <Content>
                                 {this.renderResults(search.answers)}
                             </Content>
@@ -174,6 +177,10 @@ export default class SearchPage extends Component {
     }
 
     renderResults(answers) {
+        console.log("answer")
+        console.log(answers)
+        answers=answers.payload
+        console.log(answers)
         if (answers.type == "easy") {
             //简单类的问题
             return (
@@ -193,7 +200,6 @@ export default class SearchPage extends Component {
                     (data) => {
                         return (
                             <Card content>
-                                
                                 <CardItem>
                                     <Text>{answers.refQuestion}</Text>
                                     <Right>
@@ -204,7 +210,6 @@ export default class SearchPage extends Component {
                                 </CardItem>
                             </Card>
                         )
-
                     }} />
             )
 

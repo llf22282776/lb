@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {Container, Content, Form, Item, Input, Card, Button, Text, Label, CardItem} from 'native-base';
 import {View, Image, TouchableOpacity} from 'react-native';
 import {Grid, Row, Col} from 'react-native-easy-grid';
-
+import * as sad from '../util/serverAddress'
 export default class LoginPage extends Component {
 
     constructor(props) {
@@ -36,6 +36,7 @@ export default class LoginPage extends Component {
     onLogin = () => {
         //校验账户合法性
         this.setState({canLogin: true});
+        sad.USER.nid=parseInt(account,10);
         this.props.push({key: 'home'})
     };
 

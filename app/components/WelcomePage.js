@@ -22,7 +22,6 @@ import {
     Icon,
     Input,
     Button,
-
     Form,
     InputGroup,
     Badge,
@@ -30,14 +29,14 @@ import {
 } from 'native-base';
 import * as serverAddress from "../util/serverAddress"
 import { Grid, Row, Col } from 'react-native-easy-grid';
-var i = 0;
+
 export default class WelcomePage extends Component {
     constructor(props) {
         super(props);
         setTimeout(
             () => {
-                if (i == 1) return;
-                i++;
+                if (serverAddress.i == 1) return;
+                serverAddress.i++;
                 this.props.push({ key: 'home' });
             }, 500
         );
@@ -46,15 +45,14 @@ export default class WelcomePage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
+                {/*<Text style={styles.welcome}>
                     RoadBaby
-            </Text>
+            </Text>*/}
                 <Text style={{
-
                     fontStyle:'normal',
                     fontSize: 27,
                     textAlign: 'center',
-                    marginTop: 5,
+                    marginTop: 150,
                 }}>
                     Easy your way
             </Text>
