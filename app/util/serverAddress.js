@@ -274,9 +274,6 @@ export const  getNowFormatDate=()=> {
         } catch (e) {
             //异常
             Alert.alert("错误", "信息数量获取失败");
-
-
-
         }
 
 
