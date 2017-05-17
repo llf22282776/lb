@@ -56,8 +56,8 @@ var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 export default class CommunityPage extends Component {
     constructor(props) {
         super(props);
-        console.log("CommunityPage this.props");
-        console.log(this.props);
+        //console.log("CommunityPage this.props");
+       // console.log(this.props);
         this.toQuestionDetial = this.toQuestionDetial.bind(this);
         this.fetchCoversion = this.fetchCoversion.bind(this);
         this.mapFunction = this.mapFunction.bind(this);
@@ -224,8 +224,8 @@ export default class CommunityPage extends Component {
             let data = await response.json();
 
             var data = data.coversionList;//从这个字段取东西
-            console.log("coversionList");
-            console.log(data);
+           // console.log("coversionList");
+           // console.log(data);
             this.setState({ conversionList: data });
             
 
@@ -249,7 +249,7 @@ export default class CommunityPage extends Component {
     mapFunction(rowData) {
 
         var date = rowData.date;
-        console.log(rowData);
+        //console.log(rowData);
 
         //隐射函数
         return (
@@ -303,7 +303,7 @@ export default class CommunityPage extends Component {
     }
     imageRender(rowData) {
 
-        console.log("图片地址" + serverAddress.SERVER_ROOT + serverAddress.IMAGE_ROOT + rowData.url);
+        //console.log("图片地址" + serverAddress.SERVER_ROOT + serverAddress.IMAGE_ROOT + rowData.url);
         if (rowData.url == "" || rowData.url === "" || rowData.url == null) {
             return null;
         }

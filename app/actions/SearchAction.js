@@ -34,5 +34,5 @@ export const stopInputQuestion = () => ({
 export const submitQuestion = (question) => ({
     type: types.SUBMIT_QUESTION,
     //payload: fetch('http://localhost:8080/answers.json',{headers: {'Cache-Control': 'no-cache'}}).then(response => response.json())
-    payload: fetch('http://bitholic.cn/lubao/api/answers?question='+question, {headers: {'Cache-Control': 'no-cache'}}).then(response => response.json())
+    payload: fetch('http://47.93.31.127:8080/lubao/api/answers?question='+question, {headers: {'Cache-Control': 'no-cache'}}).then(response => response.json())
 });

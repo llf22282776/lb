@@ -21,6 +21,7 @@ const store = createStore(
         navigator: navigatorReducer,
         search: searchReducer,
         user: updateUserInfoReducer,
+        
     }),
     {},  //initialState
     applyMiddleware(thunk, promiseMiddleware(), logger)

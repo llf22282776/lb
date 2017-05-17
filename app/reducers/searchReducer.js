@@ -17,6 +17,8 @@ const initialState = {
 };
 
 export default function questionReducer(state = initialState, action = {}) {
+    console.log("action type");
+    console.log(action)
     switch (action.type) {
         case types.CHANGE_QUESTION:
             return {
@@ -37,6 +39,7 @@ export default function questionReducer(state = initialState, action = {}) {
         case types.GET_SEARCH_HISTORY_FULFILLED:
             return {
                 ...state,
+                
                 searchHistory: action.payload.history,
                 searchHistoryFetched: true,
             };
@@ -63,7 +66,7 @@ export default function questionReducer(state = initialState, action = {}) {
                 searchHelpFetched: false,
             };
         case types.SUBMIT_QUESTION_PENDING:
-            state.searchHistory[state.searchHistory.length] = state.question;  //faster than push on small arrays
+            state.searchHistory[state.searchHistory.length] = state.question;  //faster than push on small arrays四车道如何调度
             storage.save({
                 key: 'searchHistory',
                 rawData: {history: state.searchHistory},
@@ -76,10 +79,11 @@ export default function questionReducer(state = initialState, action = {}) {
                 error: undefined
             };
         case types.SUBMIT_QUESTION_FULFILLED:
+    
             return {
                 ...state,
                 fetching: false,
-                answers: action.payload.answers,
+                answers: action.payload,
                 error: undefined,
             };
         case types.SUBMIT_QUESTION_REJECTED:

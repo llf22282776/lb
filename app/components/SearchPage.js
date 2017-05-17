@@ -40,14 +40,14 @@ export default class SearchPage extends Component {
     }
 
     render() {
-        const { search, changeQuestion, getSearchHistory, deleteHistory, getSearchHelp, startInputQuestion, stopInputQuestion, submitQuestion } = this.props;
+        const { search, answers, changeQuestion, getSearchHistory, deleteHistory, getSearchHelp, startInputQuestion, stopInputQuestion, submitQuestion } = this.props;
         return (
             <Container>
                 <Header searchBar rounded>
                     <Item>
                         <Icon name='ios-search' onPress={() => {
                             if (search.question !== '') {
-                                Alert.alert("s")
+
                                 submitQuestion(search.question);
                                 this.setState({
                                     lastSubmitText: search.question,
@@ -136,10 +136,10 @@ export default class SearchPage extends Component {
                             </View>
                         );
                     } else {
-                         console.log("-s-earch--");
-                        console.log(search);
+                        console.log("props");
+                        //console.log(this.props);
                         return (
-                            
+
                             <Content>
                                 {this.renderResults(search.answers)}
                             </Content>
@@ -163,7 +163,17 @@ export default class SearchPage extends Component {
         if (items instanceof Array) {
             return items.map((text, id) => {
                 return (
-                    <ListItem icon key={id}>
+                    <ListItem button icon key={id} onPress={ ()=>{
+                         if (text !== '') {
+                                    this.props.submitQuestion(text);
+                                    this.setState({
+                                        lastSubmitText: text,
+                                        searched: true,
+                                    });
+                                }
+                        
+                        
+                        } }>
                         <Body>
                             <Text>{text}</Text>
                         </Body>
@@ -177,10 +187,7 @@ export default class SearchPage extends Component {
     }
 
     renderResults(answers) {
-        console.log("answer")
-        console.log(answers)
-        answers=answers.payload
-        console.log(answers)
+
         if (answers.type == "easy") {
             //简单类的问题
             return (
@@ -193,66 +200,45 @@ export default class SearchPage extends Component {
 
         } else {
             //复杂leiwenti 
-            this.setState({ ls: answers.results });
-            return (
-                <ListView dataSource={ds.cloneWithRows(this.state.ls)} renderRow={
 
-                    (data) => {
-                        return (
-                            <Card content>
-                                <CardItem>
-                                    <Text>{answers.refQuestion}</Text>
+            return (
+
+                <Card bordered={true}>
+                    <CardItem header bordered={true}>
+                        <Text>您要找的是不是以下问题</Text>
+                    </CardItem>
+                    <ListView dataSource={ds.cloneWithRows(answers.results)} renderRow={
+                        (data,sId,rowId) => {
+                            if(rowId >= 4)return null;
+                            return (
+
+                                <CardItem button bordered={true} onPress={() => { this.toComplexDetailPage(data); }}>
+                                    <Text numberOfLines={1} >{data.refQuestion.length>=20?data.refQuestion.substring(0,15)+"..":data.refQuestion}</Text>
                                     <Right>
-                                        <Button iconRight transparent onPress={ ()=>{this.toComplexDetailPage(data);} }>
+                                        <Button iconRight transparent onPress={() => { this.toComplexDetailPage(data); }}>
                                             <Icon name="ios-arrow-forward" />
                                         </Button>
                                     </Right>
                                 </CardItem>
-                            </Card>
-                        )
-                    }} />
+
+                            )
+                        }} />
+                </Card>
             )
 
         }
 
 
 
-
-
-
-
-
-
-
-
-        /*
-                if (answers instanceof Array) {
-                    return answers.map((answer, id) => {
-                        if(answer.length>=8){
-                        return (
-                                <ListItem
-                                    key={id}
-                                    style={{paddingHorizontal: 3}}
-                                    onPress={() => this.props.push({key: 'answerDetail', answer: answer, question: this.props.search.question})}
-                                >
-                                    <Body>
-                                    <Text style={{fontSize: 14, paddingTop: 12}}>{getSubString(answer, 43)}</Text>
-                                    </Body>
-                                    <Icon name='ios-arrow-forward' style={{fontSize: 20, paddingRight: 8, }}/>
-                                </ListItem>
-                            )}
-        
-                    })
-                }*/
     }
 
 
-    toComplexDetailPage(data){
-            var jsonObj = {
-                key: "complexDetailPage",
-                props: data
-            };
-            this.props.push(jsonObj);
+    toComplexDetailPage(data) {
+        var jsonObj = {
+            key: "complexDetailPage",
+            props: data
+        };
+        this.props.push(jsonObj);
     }
 }
 

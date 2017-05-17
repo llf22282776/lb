@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+    
     StyleSheet,
     View,
     Image,
@@ -44,7 +45,8 @@ export default class WelcomePage extends Component {
     }
     render() {
         return (
-            <View style={styles.container}>
+
+            <View style={styles.container} onTouchEnd={()=>{this.props.push({key:"login"})}}>
                 {/*<Text style={styles.welcome}>
                     RoadBaby
             </Text>*/}

@@ -44,12 +44,12 @@ export default class ComplexDetailPage extends Component {
                 </Header>
                 <Content>
                     <Card>
-                        <CardItem header>
+                        <CardItem header bordered={true}>
                             <Text>
                                 {this.props.refQuestion}
                             </Text>
                         </CardItem>
-                        <CardItem>
+                        <CardItem bordered={true}>
                             <Text>
                                 {this.props.answer}
                             </Text>

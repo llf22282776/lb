@@ -17,7 +17,10 @@ import AnswerToQuestionPage from '../components/AnswerToQuestionPage';
 import SettingPage from './settingPage';
 import NewMsgListPage from './NewMsgListPage';
 import WelcomePage from './WelcomePage';
-import complexDetailPage from './ComplexDetailPage';
+import ComplexDetailPage from './ComplexDetailPage';
+import CarDetailPage from './CarDetailPage';
+import CarBindPage from './CarBindPage';
+import CarListPage from './CarListPage';
 const { CardStack } = NavigationExperimental;
 var i = 0;
 export default class Navigator extends Component {
@@ -159,6 +162,30 @@ export default class Navigator extends Component {
             case 'complexDetailPage':
                 return (
                     <ComplexDetailPage
+                        {...route.props}
+                        push={this.props.push}
+                        pop={this.props.pop}
+                    />
+                )
+            case 'carDetailPage':
+                return (
+                    <CarDetailPage
+                        {...route.props}
+                        push={this.props.push}
+                        pop={this.props.pop}
+                    />
+                )
+            case 'carBindPage':
+                return (
+                    <CarBindPage
+                        {...route.props}
+                        push={this.props.push}
+                        pop={this.props.pop}
+                    />
+                )
+            case 'carListPage':
+                return (
+                    <CarListPage
                         {...route.props}
                         push={this.props.push}
                         pop={this.props.pop}

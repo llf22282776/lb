@@ -28,19 +28,21 @@ import { Grid, Row, Col } from 'react-native-easy-grid';
 export default class UserInfo extends Component {
     constructor(props) {
         super(props);
-   
+
         this.state = {
             topicShow: false,
             username: serverAddress.USER.nick,//用户名
             phone: serverAddress.USER.phone,//电话
             sex: serverAddress.USER.sex,//性别
             msgNums: 0,
+            hasCar: false,
+            carData: {}
         }
         this.getUserMsg = this.getUserMsg.bind(this);
         this.toMsgListPage = this.toMsgListPage.bind(this);
         this.callBack_clearNewMsg = this.callBack_clearNewMsg.bind(this);
         this.renderThumbnail = this.renderThumbnail.bind(this);
-        this.getUserMsg();
+        this.call_back = this.call_back.bind(this);
         this.styles = {
             rowButton: {
                 height: 100,
@@ -57,7 +59,7 @@ export default class UserInfo extends Component {
         var url = serverAddress.SERVER_ROOT + serverAddress.GET_PERSONAL_NEW_MSG_NUM;
         url = url + "?";
         url += "nid=" + serverAddress.USER.nid;
-        console.log("url:" + url);
+        //console.log("url:" + url);
 
 
 
@@ -81,9 +83,6 @@ export default class UserInfo extends Component {
         } catch (e) {
             //异常
             Alert.alert("错误", "信息数量获取失败");
-
-
-
         }
 
 
@@ -132,7 +131,34 @@ export default class UserInfo extends Component {
                     </ListItem>
                     <ListItem itemDivider style={{ backgroundColor: 'transparent' }} />
 
-                    <ListItem icon>
+                    <ListItem icon onPress={() => {
+                        if (this.state.hasCar == false) {
+
+                            this.props.push(
+                                {
+                                    
+                                    key: 'carBindPage',
+                                    props:{
+                                        call_back: this.call_back
+                                    }
+                                });
+
+
+                        } else {
+                            this.props.push(
+                                {
+                                    key: 'carDetailPage',
+                                    props: {
+
+                                        carData: this.state.carData
+                                    }
+                                });
+
+
+                        }
+
+
+                    }}>
                         <Left>
                             <Icon name="ios-car" />
                         </Left>
@@ -140,7 +166,7 @@ export default class UserInfo extends Component {
                             <Text>我的车辆</Text>
                         </Body>
                         <Right>
-                            <Text>暂未绑定</Text>
+
                             <Icon name="ios-arrow-forward" />
                         </Right>
                     </ListItem>
@@ -237,6 +263,16 @@ export default class UserInfo extends Component {
 
 
 
+
+    }
+    call_back(data) {
+        //
+        this.setState(
+            {
+                carData: data,
+                hasCar: true
+            }
+        );
 
     }
     async  toMsgListPage() {

@@ -73,7 +73,7 @@ export default class HomePage extends Component {
                                 <Text>{headerText.qa}</Text>
                             </Button>
                             <Button active={selectedTab === 'my'} onPress={
-                                () => {
+                               async () => {
 
                                    sad.msgGetter();//取数据
                                    return tab('my');
